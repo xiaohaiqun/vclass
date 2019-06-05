@@ -2,13 +2,13 @@
   <div id="course-detail">
     <el-tabs type="border-card" stretch v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="通知" name="first">
-        <student-notice></student-notice>
+        <student-notice :courseId="courseId"></student-notice>
       </el-tab-pane>
       <el-tab-pane label="作业" name="second">
-        <student-homework></student-homework>
+        <student-homework :courseId="courseId"></student-homework>
       </el-tab-pane>
       <el-tab-pane label="文件" name="third">
-        <student-file></student-file>
+        <student-file :courseId="courseId"></student-file>
       </el-tab-pane>
       <el-tab-pane label="其它" name="fourth">
         <else></else>
@@ -29,6 +29,9 @@ export default {
       activeName: 'first',
       isDetail: false
     }
+  },
+  props: {
+    courseId: ''
   },
   methods: {
     handleClick (tab, event) {

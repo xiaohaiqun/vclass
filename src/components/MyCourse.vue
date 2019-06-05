@@ -4,7 +4,7 @@
       <h3>课程列表</h3>
       <div v-for="course in courseList" :key="course.id">
         <el-divider></el-divider>
-        <p @click="changeCourse(course.id)">{{course.courseName}}</p>
+        <p type="text" @click="changeCourse(course.id)">{{course.courseName}}</p>
       </div>
     </el-aside>
   </div>
@@ -27,10 +27,9 @@ export default {
   mounted () {
     // this.courseList = data.courseList
   },
-  method: {
+  methods: {
     changeCourse (courseId) {
       this.courseId = courseId
-      alert('click')
       this.$emit('listenToChild', this.courseId)
     },
     getNoticeList (courseId) {
@@ -52,8 +51,14 @@ export default {
   #my-course h3, p, a, span {
     text-align: center;
   }
+  #my-course p {
+    cursor: pointer;
+  }
   .el-divider {
     margin: 10px;
+  }
+  .el-button {
+    text-align: center
   }
   .el-table {
     text-align: center;

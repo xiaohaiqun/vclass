@@ -1,16 +1,22 @@
 <template>
-  <div id="teacher-notice">
-    <notice-list></notice-list>
+  <div id="student-notice">
+    <notice-list :courseId="courseId"></notice-list>
   </div>
 </template>
 
 <script>
 import NoticeList from '../NoticeList.vue'
 export default {
-  name: 'TeacherNotice',
+  name: 'StudentNotice',
   data () {
     return {
     }
+  },
+  props: {
+    courseId: 0
+  },
+  created () {
+    // alert(this.GLOBAL.courseId)
   },
   components: {
     NoticeList
@@ -19,7 +25,7 @@ export default {
 </script>
 
 <style scoped>
-  #teacher-notice {
+  #student-notice {
     margin: 10px 20px;
     height: 580px;
     overflow-y: scroll;

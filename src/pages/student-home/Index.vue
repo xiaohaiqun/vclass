@@ -6,7 +6,7 @@
       <el-container style="height: 680px; border: 1px solid #eee">
         <my-course :courseList="courseList" v-on:listenToChild="changeCourse"></my-course>
         <el-main>
-          <course-detail></course-detail>
+          <course-detail :courseId="courseId"></course-detail>
         </el-main>
       </el-container>
     </el-container>
@@ -22,7 +22,7 @@ export default {
   data () {
     return {
       courseList: [],
-      courseId: Number
+      courseId: 0
     }
   },
   components: {
@@ -44,8 +44,8 @@ export default {
         console.log(error)
       })
     },
-    changeCourse (data) {
-      this.courseId = data.courseId
+    changeCourse (courseId) {
+      this.courseId = courseId
     }
   }
 }

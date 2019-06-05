@@ -1,6 +1,6 @@
 <template>
   <div id="student-file">
-    <file-list></file-list>
+    <file-list :courseId="courseId"></file-list>
   </div>
 </template>
 
@@ -12,6 +12,9 @@ export default {
     return {
     }
   },
+  props: {
+    courseId: 0
+  },
   components: {
     FileList
   }
@@ -19,7 +22,7 @@ export default {
 </script>
 
 <style scoped>
-  #teacher-file {
+  #student-file {
     margin: 10px 20px;
     height: 580px;
     overflow-y: scroll;
