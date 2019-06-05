@@ -4,7 +4,7 @@
       <el-header>vclass</el-header>
 
       <el-container style="height: 680px; border: 1px solid #eee">
-        <my-course :courseList="courseList"></my-course>
+        <my-course :courseList="courseList" v-on:listenToChild="changeCourse"></my-course>
         <el-main>
           <course-detail></course-detail>
         </el-main>
@@ -21,7 +21,8 @@ export default {
   name: 'Index',
   data () {
     return {
-      courseList: []
+      courseList: [],
+      courseId: Number
     }
   },
   components: {
@@ -29,15 +30,23 @@ export default {
     CourseDetail
   },
   created () {
-    axios({
-      method: 'get',
-      url: '/api/home'
-    }).then((res) => {
-      this.courseList = res.data.courseList
-    }).catch(error => {
-      alert('获取课程失败')
-      console.log(error)
-    })
+    this.getCourseList()
+  },
+  methods: {
+    getCourseList () {
+      axios({
+        method: 'get',
+        url: '/api/home'
+      }).then((res) => {
+        this.courseList = res.data.courseList
+      }).catch(error => {
+        alert('获取课程失败')
+        console.log(error)
+      })
+    },
+    changeCourse (data) {
+      this.courseId = data.courseId
+    }
   }
 }
 </script>

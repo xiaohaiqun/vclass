@@ -1,19 +1,10 @@
 <template>
   <div id="my-course">
     <el-aside width="310px" style="background-color: rgb(238, 241, 246)">
-      <!-- <el-table
-        :data="courseList"
-        height="680px"
-        highlight-current-row
-        @current-change="handleCurrentChange"
-        @row-click="handleCurrentChange">
-        <el-table-column prop="courseName" label="我的课程">
-        </el-table-column>
-      </el-table> -->
       <h3>课程列表</h3>
       <div v-for="course in courseList" :key="course.id">
         <el-divider></el-divider>
-        <p>{{course.courseName}}</p>
+        <p @click="changeCourse(course.id)">{{course.courseName}}</p>
       </div>
     </el-aside>
   </div>
@@ -26,7 +17,8 @@ export default {
   data () {
     return {
       courseDetail: {},
-      currentRow: null
+      currentRow: null,
+      courseId: 0
     }
   },
   props: {
@@ -36,8 +28,10 @@ export default {
     // this.courseList = data.courseList
   },
   method: {
-    handleCurrentChange (val) {
-      console.log('handle success')
+    changeCourse (courseId) {
+      this.courseId = courseId
+      alert('click')
+      this.$emit('listenToChild', this.courseId)
     },
     getNoticeList (courseId) {
       return axios.get('api/home/noticeList', {

@@ -24,14 +24,19 @@ export default {
     courseId: 0
   },
   created () {
-    let _this = this
-    axios.get('/api/home/noticeList', {
-      params: {
-        courseId: _this.courseId
-      }
-    }).then(res => {
-      _this.noticeList = res.data.noticeList
-    })
+    this.getNoticeList()
+  },
+  methods: {
+    getNoticeList () {
+      let _this = this
+      axios.get('/api/home/noticeList', {
+        params: {
+          courseId: _this.courseId
+        }
+      }).then(res => {
+        _this.noticeList = res.data.noticeList
+      })
+    }
   }
 }
 </script>
