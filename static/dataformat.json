@@ -1,0 +1,65 @@
+{
+    "user": [
+      {
+        "username": "111",
+        "password": "111"
+      },
+      {
+        "username": "222",
+        "password": "222"
+      }
+    ],
+    "courseList": [
+      {
+        "id": 1,
+        "courseName": "课程"
+      },
+      {
+        "id": 2,
+        "courseName": "课程"
+      }
+    ],
+    "noticeList": [
+      {
+        "id": 1,
+        "headline": "通知标题",
+        "content": "通知内容"
+      },
+      {
+        "id": 1,
+        "headline": "通知标题",
+        "content": "通知内容"
+      }
+    ],
+    "homeworks": [
+      {
+        "id": 1,
+        "headline": "作业标题",
+        "content": "作业内容",
+        "homeworkSubmit": 
+        {
+          "description": "作业提交说明"
+        }
+      },
+      {
+        "id": 1,
+        "headline": "作业标题",
+        "content": "作业内容"
+      }
+    ],
+    "files": [
+      {
+        "id": 1,
+        "filename": "filename1",
+        "filesize": "21M",
+        "uploader": "user"
+      },
+      {
+        "id": 1,
+        "filename": "filename1",
+        "filesize": "21M",
+        "uploader": "user"
+      }
+      
+    ]
+  }

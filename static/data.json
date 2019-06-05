@@ -1,0 +1,274 @@
+{
+  "user": [
+    {
+      "id": 1,
+      "username": "111",
+      "password": "111"
+    },
+    {
+      "id": 2,
+      "username": "222",
+      "password": "222"
+    }
+  ],
+  "courseList": [
+    {
+      "id": 1,
+      "courseName": "课程"
+    },
+    {
+      "id": 2,
+      "courseName": "课程"
+    },
+    {
+      "id": 3,
+      "courseName": "课程"
+    },
+    {
+      "id": 4,
+      "courseName": "课程"
+    },
+    {
+      "id": 5,
+      "courseName": "课程"
+    },
+    {
+      "id": 6,
+      "courseName": "课程"
+    },
+    {
+      "id": 7,
+      "courseName": "课程"
+    },
+    {
+      "id": 8,
+      "courseName": "课程"
+    },
+    {
+      "id": 9,
+      "courseName": "课程"
+    },
+    {
+      "id": 10,
+      "courseName": "课程"
+    },
+    {
+      "id": 11,
+      "courseName": "课程"
+    },
+    {
+      "id": 12,
+      "courseName": "课程"
+    }
+  ],
+  "noticeList": [
+    {
+      "id": 1,
+      "headline": "通知标题",
+      "content": "通知内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "通知标题",
+      "content": "通知内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "通知标题",
+      "content": "通知内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "通知标题",
+      "content": "通知内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "通知标题",
+      "content": "通知内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "通知标题",
+      "content": "通知内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "通知标题",
+      "content": "通知内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "通知标题",
+      "content": "通知内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    }
+  ],
+  "homeworks": [
+    {
+      "id": 1,
+      "headline": "作业标题",
+      "content": "作业内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "作业标题",
+      "content": "作业内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "作业标题",
+      "content": "作业内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "作业标题",
+      "content": "作业内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "作业标题",
+      "content": "作业内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "作业标题",
+      "content": "作业内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "作业标题",
+      "content": "作业内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    },
+    {
+      "id": 1,
+      "headline": "作业标题",
+      "content": "作业内容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容容"
+    }
+  ],
+  "fileList": [
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    },
+    {
+      "id": 1,
+      "filename": "filename1",
+      "filesize": "21M",
+      "uploader": "user"
+    }
+    
+  ],
+  "files": [
+    {
+      "filename": "file1",
+      "filesize": 10,
+      "uploader": "student1"
+    }
+  ],
+  "StudentHomework": {
+    "headline": "作业标题",
+    "content": "作业内容",
+    "files": [
+      {
+        "filename": "file1",
+        "filesize": 10,
+        "uploader": "student1"
+      },
+      {
+        "filename": "file1",
+        "filesize": 10,
+        "uploader": "student1"
+      }
+    ],
+    "explain": "这是作业说明",
+    "state": true,
+    "score": 98,
+    "feedback": "作业反馈，设置默认选项，也可自定义"
+  }
+}
