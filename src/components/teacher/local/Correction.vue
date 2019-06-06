@@ -11,6 +11,7 @@
     </el-table>
     <h3>说明</h3>
     <p>{{StudentHomework.explain}}</p>
+    <el-button @click="change_selected_student">完成</el-button>
   </div>
 </template>
 
@@ -29,6 +30,13 @@ export default {
         feedback: ''
       }
     }
+  },
+   methods: {
+    change_selected_student ( ) {
+      this.global.selected_student='null'
+       console.log(this.global.selected_student)
+      console.log("successfullu changed")
+    },
   },
   mounted () {
   }

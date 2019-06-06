@@ -9,10 +9,16 @@ import axios from 'axios'
 import store from './store/index.js'
 import * as types from './store/types.js'
 
+import global_ from './global_data.vue' //引用文件
+ Vue.prototype.global = global_         //挂载到Vue实例上面
+
 require('./mock')
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.config.devtools = true
+
+//全局变量测试
+var selected_student='null'
 
 // axios.defaults.baseURL = 'http://127.0.0.1:8080'
 axios.interceptors.request.use(function (config) {

@@ -4,7 +4,7 @@
       <h3>课程列表</h3>
       <div v-for="course in courseList" :key="course.id">
         <el-divider></el-divider>
-        <p @click="changeCourse(course.id)">{{course.courseName}}</p>
+        <p @clickcource="changeCourse(courseId)">{{course.courseName}}</p>
       </div>
     </el-aside>
   </div>
@@ -27,13 +27,13 @@ export default {
   mounted () {
     // this.courseList = data.courseList
   },
-  method: {
-    changeCourse (courseId) {
+  methods: {
+    changeCourse: function ( courseId ) {
       this.courseId = courseId
       alert('click')
       this.$emit('listenToChild', this.courseId)
     },
-    getNoticeList (courseId) {
+    getNoticeList: function(courseId) {
       return axios.get('api/home/noticeList', {
         params: {
           courseId: this.courseId

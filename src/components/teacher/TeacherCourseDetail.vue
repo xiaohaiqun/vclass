@@ -5,7 +5,8 @@
         <teacher-notice></teacher-notice>
       </el-tab-pane>
       <el-tab-pane label="作业" name="second">
-        <teacher-homework></teacher-homework>
+        <teacher-homework v-if ="this.global.selected_student== 'null'" ></teacher-homework>
+        <correction v-if="this.global.selected_student!= 'null'"></correction>
       </el-tab-pane>
       <el-tab-pane label="文件" name="third">
         <teacher-file></teacher-file>
@@ -28,7 +29,8 @@ export default {
   data () {
     return {
       activeName: 'first',
-      isDetail: false
+      isDetail: false ,
+      //selected_student: 'll',
     }
   },
   methods: {
@@ -44,7 +46,7 @@ export default {
     TeacherHomework,
     TeacherFile,
     Else,
-    Correction
+    Correction,
   }
 }
 </script>

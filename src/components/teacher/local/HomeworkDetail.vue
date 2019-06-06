@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script>
+<script>                                                                  
 export default {
   name: 'HomeworkDetail',
   data () {
@@ -55,6 +55,8 @@ export default {
       this.isDetail = !this.isDetail
       this.$emit('toDetail', this.isDetail)
       alert('test')
+      this.global.selected_student='name'
+      console.log( this.global.selected_student)
     }
   }
 }

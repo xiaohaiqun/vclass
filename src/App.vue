@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Index from './pages/teacher-home/Index.vue'
+import Index from './pages/student-home/Index.vue'
 export default {
   name: 'App',
   components: {
