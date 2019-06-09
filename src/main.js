@@ -8,11 +8,14 @@ import router from './router'
 import axios from 'axios'
 import store from './store/index.js'
 import * as types from './store/types.js'
+import GlobalVariable from './components/tool/GlobalVariable.js'
 
 require('./mock')
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.config.devtools = true
+
+Vue.prototype.global = GlobalVariable
 
 // axios.defaults.baseURL = 'http://127.0.0.1:8080'
 axios.interceptors.request.use(function (config) {

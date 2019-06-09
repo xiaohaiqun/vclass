@@ -10,38 +10,29 @@
 
 <script>
 import HomeworkSubmit from './local/HomeworkSubmit.vue'
-import axios from 'axios'
-// import data from '../../static/data.json'
+import global_ from '../tool/Global.vue'
 export default {
   name: 'StudentHomework',
   data () {
     return {
-      homeworkList: [],
       final: false,
       activeName: '1'
     }
   },
   props: {
+    homeworkList: [],
     courseId: 0,
     isDetail: false
   },
   created () {
-    this.getHomeworkList()
+    console.log('homework created')
+    // this.homeworkList = global_.homeworkList
+    console.log(global_.homeworkList)
   },
   methods: {
     childByValue: function (isDetail) {
       this.isDetail = isDetail
       this.$emit('toDetail', this.isDetail)
-    },
-    getHomeworkList () {
-      let _this = this
-      axios.get('/api/home/homeworkList', {
-        params: {
-          courseId: _this.courseId
-        }
-      }).then(res => {
-        _this.homeworkList = res.data.homeworkList
-      })
     }
   },
   components: {

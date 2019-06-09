@@ -1,9 +1,8 @@
-<script>
 const courseId = 0
 const test = 1
 const noticeList = []
 const homeworkList = []
-const fileList = ['not been valued']
+const fileList = []
 
 export default {
   courseId,
@@ -12,4 +11,3 @@ export default {
   homeworkList,
   fileList
 }
-</script>

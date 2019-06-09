@@ -1,0 +1,30 @@
+    getNoticeList () {
+      let _this = this
+      axios.get('/api/home/noticeList', {
+        params: {
+          courseId: _this.courseId
+        }
+      }).then(res => {
+        _this.noticeList = res.data.noticeList
+      })
+    },
+    getHomeworkList () {
+      let _this = this
+      axios.get('/api/home/homeworkList', {
+        params: {
+          courseId: _this.courseId
+        }
+      }).then(res => {
+        _this.homeworkList = res.data.homeworkList
+      })
+    },
+    getFileList () {
+      let _this = this
+      axios.get('/api/home/fileList', {
+        params: {
+          courseId: _this.courseId
+        }
+      }).then(res => {
+        _this.fileList = res.data.fileList
+      })
+    },

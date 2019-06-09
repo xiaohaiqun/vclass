@@ -11,8 +11,8 @@
 </template>
 
 <script>
-// import data from '../../static/data.json'
-import axios from 'axios'
+// import axios from 'axios'
+import global_ from './tool/Global.vue'
 export default {
   name: 'NoticeList',
   data () {
@@ -24,19 +24,11 @@ export default {
     courseId: 0
   },
   created () {
-    this.getNoticeList()
+    this.noticeList = global_.noticeList
+    console.log('notice created')
+    console.log(this.noticeList)
   },
   methods: {
-    getNoticeList () {
-      let _this = this
-      axios.get('/api/home/noticeList', {
-        params: {
-          courseId: _this.courseId
-        }
-      }).then(res => {
-        _this.noticeList = res.data.noticeList
-      })
-    }
   }
 }
 </script>

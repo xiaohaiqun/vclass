@@ -11,7 +11,7 @@
         <el-table-column prop="" label="上传日期">
         </el-table-column>
         <el-table-column align="right">
-          <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope>
             <el-input v-model="search" size="mini" placeholder="输入关键字搜索"></el-input>
           </template>
           <template slot-scope="scope">
@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import global_ from './tool/Global.vue'
 export default {
   name: 'FileList',
   data () {
@@ -43,21 +44,12 @@ export default {
     courseId: 0
   },
   created () {
-    this.getCourseList()
+    console.log('fileList created')
+    this.fileList = global_.fileList
   },
   methods: {
     handleDelete (index, row) {
       console.log(index, row)
-    },
-    getCourseList () {
-      let _this = this
-      axios.get('/api/home/fileList', {
-        params: {
-          courseId: _this.courseId
-        }
-      }).then(res => {
-        _this.fileList = res.data.fileList
-      })
     }
   }
 }

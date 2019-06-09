@@ -2,16 +2,18 @@
   <div id="my-course">
     <el-aside width="310px" style="background-color: rgb(238, 241, 246)">
       <h3>课程列表</h3>
+      <div id="course-list">
       <div v-for="course in courseList" :key="course.id">
         <el-divider></el-divider>
         <p type="text" @click="changeCourse(course.id)">{{course.courseName}}</p>
+      </div>
       </div>
     </el-aside>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   name: 'MyCourse',
   data () {
@@ -31,13 +33,6 @@ export default {
     changeCourse (courseId) {
       this.courseId = courseId
       this.$emit('listenToChild', this.courseId)
-    },
-    getNoticeList (courseId) {
-      return axios.get('api/home/noticeList', {
-        params: {
-          courseId: this.courseId
-        }
-      })
     }
   }
 }
@@ -46,13 +41,15 @@ export default {
 <style scoped>
   #my-course {
     color: #660000;
-    overflow: scroll;
   }
   #my-course h3, p, a, span {
     text-align: center;
   }
   #my-course p {
     cursor: pointer;
+  }
+  #course-list {
+    overflow: scroll;
   }
   .el-divider {
     margin: 10px;

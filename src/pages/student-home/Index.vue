@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="student">
     <el-container>
       <el-header>vclass</el-header>
 
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import global_ from '../../components/tool/Global.vue'
 import MyCourse from '../../components/MyCourse.vue'
 import CourseDetail from '../../components/student/StudentCourseDetail.vue'
 import axios from 'axios'
@@ -22,15 +23,27 @@ export default {
   data () {
     return {
       courseList: [],
-      courseId: 0
+      noticeList: [],
+      homeworkList: [],
+      fileList: [],
+      courseId: 1,
+      test: 0
     }
   },
   components: {
     MyCourse,
     CourseDetail
   },
+  beforeCreate () {
+  },
   created () {
     this.getCourseList()
+    console.log(' index created')
+    this.getCourseDetail()
+    console.log('index created end')
+    global_.test = 100
+    console.log(global_.test)
+    console.log(global_.fileList)
   },
   methods: {
     getCourseList () {
@@ -39,10 +52,28 @@ export default {
         url: '/api/home'
       }).then((res) => {
         this.courseList = res.data.courseList
+        console.log('getcourselist')
       }).catch(error => {
         alert('获取课程失败')
         console.log(error)
       })
+    },  
+    getCourseDetail () {
+      let _this = this
+      console.log('getCourseDetail start')
+      axios({
+        method: 'get',
+        url: '/api/courseDetail'
+      }).then(res => {
+        _this.noticeList = res.data.noticeList
+        _this.homeworkList = res.data.homeworkList
+        _this.fileList = res.data.fileList
+        global_.noticeList = res.data.noticeList
+        global_.homeworkList = res.data.homeworkList
+        global_.fileList = res.data.fileList
+        global_.test = 100
+      })
+      console.log('getCourseDetail end')
     },
     changeCourse (courseId) {
       this.courseId = courseId
@@ -52,6 +83,9 @@ export default {
 </script>
 
 <style scoped>
+  #student {
+    overflow: hidden;
+  }
   .el-header, .el-footer {
     background-color: #B3C0D1;
     color: #333;
