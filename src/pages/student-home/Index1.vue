@@ -43,23 +43,23 @@
 </template>
 
 <script>
-import global_ from '../../components/tool/Global.vue'
+// import global_ from '../../components/tool/Global.vue'
 import MyCourse from '../../components/MyCourse.vue'
 import CourseDetail from '../../components/student/StudentCourseDetail.vue'
-import axios from 'axios'
+// import axios from 'axios'
 import notice from '../../components/student/StudentNotice.vue'
 import homework from '../../components/student/StudentHomework.vue'
 import file from '../../components/student/StudentFile.vue'
-import {GETCOURSES} from '../../api/courses.js'
+import {GETCOURSEDETAIL, GETCOURSES} from '../../api/courses.js'
 export default {
   name: 'Index',
   data () {
     return {
-      courseList: [],
-      noticeList: [],
-      homeworkList: [],
-      fileList: [],
-      courseId: 1,
+      course_list: [],
+      notice_list: [],
+      homework_list: [],
+      file_list: [],
+      course_id: 1,
       test: 0,
       activeName: 'first',
       isDetail: false
@@ -76,49 +76,31 @@ export default {
   },
   created () {
     // this.getCourseList()
-    this.getData()
-    console.log(' index created')
-    // this.getCourseDetail()
+    this.getCourses()
+    this.getCourseDetail()
     console.log('index created end')
-    console.log(global_.fileList)
+    console.log(' index created')
   },
   methods: {
-    getData () {
-      let promise = GETCOURSES({course_id: this.courseId})
+    getCourses () {
+      let _this = this
+      let promise = GETCOURSES()
       console.log('test')
       console.log(promise)
       promise.then(function (res) {
         console.log(res)
         console.log(res.data)
-        this.courseList = res.data.courseList
+        _this.course_list = res.data.data.course_list
+        _this.course_id = _this.course_list[0].course_id
       })
     },
     getCourseDetail () {
       let _this = this
       console.log('getCourseDetail start')
-      axios({
-        method: 'get',
-        // params: {courseId: _this.courseId},
-        url: '/api/courseDetail'
-        // url: 'http://vclass.finpluto.tech/courses/'
-      }).then(res => {
-        if (res.data.code === 200) {
-          _this.noticeList = res.data.noticeList
-          _this.homeworkList = res.data.homeworkList
-          _this.fileList = res.data.fileList
-          console.log('get course-detail return 200')
-        } else if (res.data.code === 401) {
-          console.log('get course-detail return 401')
-        } else if (res.data.code === 403) {
-          console.log('get course-detail return 403')
-        } else {
-          console.log('get course-detail return 404')
-        }
-      }).catch(error => {
-        console.log(error)
-        console.log('get course-detail error')
+      let promise = GETCOURSEDETAIL({course_id: _this.course_id})
+      promise.then(res => {
+        console.log(res)
       })
-      console.log('getCourseDetail end')
     },
     changeCourse (courseId) {
       this.courseId = courseId

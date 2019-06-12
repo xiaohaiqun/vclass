@@ -2,9 +2,9 @@ import axios from 'axios'
 import router from '../router'
 import store from '../store/index'
 
-if (window.localStorage.getItem('token')) {
-  axios.defaults.headers.common['Authorization'] = `Bearer ` + window.localStorage.getItem('token')
-}
+// if (window.localStorage.getItem('token')) {
+//   axios.defaults.headers.common['Authorization'] = `token ` + window.localStorage.getItem('token')
+// }
 
 let local = false
 
@@ -23,7 +23,8 @@ axios.interceptors.request.use(
   },
   err => {
     return Promise.reject(err)
-  })
+  }
+)
 
 // 响应拦截器 response 忽略
 instance.interceptors.response.use(

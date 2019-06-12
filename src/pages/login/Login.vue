@@ -63,9 +63,7 @@ export default {
         formData.append('userid', this.user.userid)
         formData.append('password', this.user.password)
         let test = USERLOGIN(formData)
-        console.log('test')
         console.log('userid:' + this.user.userid)
-        // console.log(localStorage.state.token)
         test.then(function (res) {
           console.log(res.data)
           _this.userInfo = res.data.data

@@ -6,6 +6,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/index'
 import router from './router'
+import axios from 'axios'
 // import * as types from './store/types.js'
 import GlobalVariable from './components/tool/GlobalVariable.js'
 
@@ -15,6 +16,19 @@ Vue.config.productionTip = false
 Vue.config.devtools = true
 
 Vue.prototype.global = GlobalVariable
+
+// 请求拦截器 忽略
+axios.interceptors.request.use(
+  config => {
+    if (store.state.token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
+      config.headers.Authorization = `Bearer ${store.state.token}`
+    }
+    return config
+  },
+  err => {
+    return Promise.reject(err)
+  }
+)
 
 /* eslint-disable no-new */
 new Vue({
