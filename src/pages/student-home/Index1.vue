@@ -50,6 +50,7 @@ import axios from 'axios'
 import notice from '../../components/student/StudentNotice.vue'
 import homework from '../../components/student/StudentHomework.vue'
 import file from '../../components/student/StudentFile.vue'
+import {GETCOURSES} from '../../api/courses.js'
 export default {
   name: 'Index',
   data () {
@@ -74,25 +75,22 @@ export default {
   beforeCreate () {
   },
   created () {
-    this.getCourseList()
+    // this.getCourseList()
+    this.getData()
     console.log(' index created')
-    this.getCourseDetail()
+    // this.getCourseDetail()
     console.log('index created end')
-    global_.test = 100
-    console.log(global_.test)
     console.log(global_.fileList)
   },
   methods: {
-    getCourseList () {
-      axios({
-        method: 'get',
-        url: '/api/home'
-      }).then((res) => {
+    getData () {
+      let promise = GETCOURSES({course_id: this.courseId})
+      console.log('test')
+      console.log(promise)
+      promise.then(function (res) {
+        console.log(res)
+        console.log(res.data)
         this.courseList = res.data.courseList
-        console.log('getcourselist')
-      }).catch(error => {
-        alert('获取课程失败')
-        console.log(error)
       })
     },
     getCourseDetail () {
@@ -100,15 +98,25 @@ export default {
       console.log('getCourseDetail start')
       axios({
         method: 'get',
+        // params: {courseId: _this.courseId},
         url: '/api/courseDetail'
+        // url: 'http://vclass.finpluto.tech/courses/'
       }).then(res => {
-        _this.noticeList = res.data.noticeList
-        _this.homeworkList = res.data.homeworkList
-        _this.fileList = res.data.fileList
-        global_.noticeList = res.data.noticeList
-        global_.homeworkList = res.data.homeworkList
-        global_.fileList = res.data.fileList
-        global_.test = 100
+        if (res.data.code === 200) {
+          _this.noticeList = res.data.noticeList
+          _this.homeworkList = res.data.homeworkList
+          _this.fileList = res.data.fileList
+          console.log('get course-detail return 200')
+        } else if (res.data.code === 401) {
+          console.log('get course-detail return 401')
+        } else if (res.data.code === 403) {
+          console.log('get course-detail return 403')
+        } else {
+          console.log('get course-detail return 404')
+        }
+      }).catch(error => {
+        console.log(error)
+        console.log('get course-detail error')
       })
       console.log('getCourseDetail end')
     },

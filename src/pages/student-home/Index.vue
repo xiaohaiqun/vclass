@@ -18,6 +18,7 @@ import global_ from '../../components/tool/Global.vue'
 import MyCourse from '../../components/MyCourse.vue'
 import CourseDetail from '../../components/student/StudentCourseDetail.vue'
 import axios from 'axios'
+import {GETCOURSES} from '../../api/courses.js'
 export default {
   name: 'Index',
   data () {
@@ -37,15 +38,26 @@ export default {
   beforeCreate () {
   },
   created () {
-    this.getCourseList()
+    this.getData()
+    // this.getCourseList()
     console.log(' index created')
-    this.getCourseDetail()
+    // this.getCourseDetail()
     console.log('index created end')
     global_.test = 100
     console.log(global_.test)
     console.log(global_.fileList)
   },
   methods: {
+    getData () {
+      let promise = GETCOURSES({course_id: this.courseId})
+      console.log('test')
+      console.log(promise)
+      promise.then(function (res) {
+        console.log(res)
+      })
+      
+      console.log(promise.data.courseList)
+    },
     getCourseList () {
       axios({
         method: 'get',

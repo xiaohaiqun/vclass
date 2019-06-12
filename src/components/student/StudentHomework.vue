@@ -10,7 +10,7 @@
 
 <script>
 import HomeworkSubmit from './local/HomeworkSubmit.vue'
-import global_ from '../tool/Global.vue'
+// import global_ from '../tool/Global.vue'
 export default {
   name: 'StudentHomework',
   data () {
@@ -27,7 +27,7 @@ export default {
   created () {
     console.log('homework created')
     // this.homeworkList = global_.homeworkList
-    console.log(global_.homeworkList)
+    // console.log(global_.homeworkList)
   },
   methods: {
     childByValue: function (isDetail) {

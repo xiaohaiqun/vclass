@@ -3,12 +3,12 @@
     <h1>登录</h1>
     <form>
       <input
-        value="username"
+        value="userid"
         onfocus="this.value=''"
         type="username"
-        name="username"
-        onblur="if (this.value == '') {this.value = 'username';}"
-        v-model="user.username"
+        name="userid"
+        onblur="if (this.value == '') {this.value = 'userid';}"
+        v-model="user.userid"
       >
       <br>
       <input
@@ -29,14 +29,23 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {USERLOGIN} from '../../api/userLogin.js'
+import * as types from '../../store/types'
+// import req from '../../api/http.js'
+// import axios from 'axios'
 export default {
   name: 'Login',
   data () {
     return {
       user: {
-        username: '',
+        userid: '',
         password: ''
+      },
+      userInfo: {
+        authorized_token: '',
+        user_id: '',
+        user_identifier: 0,
+        user_name: ''
       },
       token: '',
       show: false,
@@ -45,51 +54,41 @@ export default {
   },
   methods: {
     login () {
-      let _this = this
-      if (this.user.username === '' ||
+      if (this.user.userid === '' ||
       this.user.password === '') {
         alert('账号或密码不能为空')
       } else {
-        axios({
-          method: 'post',
-          url: '/api/login',
-          data: JSON.stringify(_this.user)
-        }).then(res => {
-          console.log(res)
-          // 当后台返回代码里面显示登录成功之后我们将token进行保存
-          if (res.status === 200) {
-            // _this.$store.commit('setToken', res.data)
-            _this.$notify({
-              title: '提示信息',
-              message: '登陆成功',
-              type: 'success'
-            })
+        let _this = this
+        let formData = new FormData()
+        formData.append('userid', this.user.userid)
+        formData.append('password', this.user.password)
+        let test = USERLOGIN(formData)
+        console.log('test')
+        console.log('userid:' + this.user.userid)
+        // console.log(localStorage.state.token)
+        test.then(function (res) {
+          console.log(res.data)
+          _this.userInfo = res.data.data
+          _this.$store.commit(types.LOGIN, res.data.data.authorized_token)
+          // console.log(localStorage.state.token)
+          if (_this.userInfo.user_identifier === 0) {
+            _this.$router.push('/home')
           } else {
-            _this.$notify({
-              title: '提示信息',
-              message: '账号或密码错误',
-              type: 'error'
-            })
+            _this.$router.push('/teacher-home')
           }
-          // _this.userToken = 'Bearer' + res.data.token
-          // // 将用户token保存到vuex中
-          // _this.changeLogin({token: _this.userToken})
-          _this.$router.push('/home')
-          alert('test')
-        }).catch(error => {
-          alert('catch error')
+        }).catch(function (error) {
           console.log(error)
         })
       }
     }
     // login () {
-    //   if (this.username === '') {
+    //   if (this.userid === '') {
     //     this.$message.warning('用户名不能为空哦~~')
     //   } else if (this.password === '') {
     //     this.$message.warning('密码不能为空哦~~')
     //   } else {
     //     this.$store.dispatch('toLogin', {
-    //       loginUser: this.username,
+    //       loginUser: this.userid,
     //       loginPassword: this.password
     //     }).then(() => {
     //       this.$store.dispatch('getUser')
