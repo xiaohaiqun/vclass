@@ -59,7 +59,7 @@ export default {
       noticeList: [],
       homeworkList: [],
       fileList: [],
-      courseId: 1,
+      courseId: '1610029851',
       test: 0,
       activeName: 'first',
       isDetail: false
@@ -92,7 +92,7 @@ export default {
         console.log(res)
         console.log(res.data.data)
         _this.courseList = res.data.data.course_list
-        _this.courseId = _this.courseList[0].course_id
+        // _this.courseId = _this.courseList[0].course_id
       })
     },
     getCourseDetail () {
