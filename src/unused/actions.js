@@ -1,4 +1,4 @@
-import * as types from './types'
+import * as types from '../store/types'
 import { instance, login, getUserInfo } from '../api/http.js'
 
 export default {

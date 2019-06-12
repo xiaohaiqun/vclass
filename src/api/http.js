@@ -10,12 +10,16 @@ let local = false
 
 let instance = axios.create({
   baseURL: local ? 'http://localhost:8080/api' : 'http://vclass.finpluto.tech/',
-  timeout: 6000
+  timeout: 6000,
+  headers: {
+    Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjA0NDc0MzIsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.7zIX5tDdWzYkrO4XFcPB-SBFTiO4udyhiv4qiSPOcUU'
+  }
 })
 
 // 请求拦截器 忽略
 axios.interceptors.request.use(
   config => {
+    console.log('---------------------')
     if (store.state.token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
       // config.headers.Authorization = `Bearer + ${store.state.token}`
     }

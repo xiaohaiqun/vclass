@@ -4,13 +4,13 @@
     <div id="file">
     <el-main>
       <el-table :data="fileList" height="500px">
-        <el-table-column prop="filename" label="文件名称" width="140">
+        <el-table-column prop="file_name" label="文件名称" width="140">
         </el-table-column>
-        <el-table-column prop="filesize" label="文件大小" width="120">
+        <el-table-column prop="display_path" label="文件位置" width="120">
         </el-table-column>
-        <el-table-column prop="uploader" label="上传者">
+        <el-table-column prop="upload_user" label="上传者">
         </el-table-column>
-        <el-table-column prop="" label="上传日期">
+        <el-table-column prop="upload_date" label="上传日期">
         </el-table-column>
         <el-table-column align="right">
           <template slot="header" slot-scope>

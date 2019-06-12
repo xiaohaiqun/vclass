@@ -1,3 +1,3 @@
 import req from './http.js'
 
-export const GETCOURSEDETAIL = params => req('get', 'courses', params)
+export const CREATEHOMEWORK = params => req('post', 'courses/homeworks', params)

@@ -1,22 +1,39 @@
 <template>
   <div id="student-homework">
-    <el-collapse v-for="homework in homeworkList" :key="homework.id" v-model="activeName" accordion>
-      <el-collapse-item title="作业标题">
-        <homework-submit v-on:toDetail="childByValue"></homework-submit>
+    <el-collapse v-for="homework in homeworkList" :key="homework.hw_id" v-model="activeName" accordion>
+      <el-collapse-item title="homework.hw_title">
+        <div id="homework-submit">
+          <!-- <h3>作业标题</h3>
+          <p>adhkshdkjhsalfkhkfdshkj</p> -->
+          <h3>情况</h3>
+          <p>提交状态:<span>已交</span></p>
+          <h3>作业说明</h3>
+          <el-input type="textarea" v-model="input" placeholder="请输入作业说明"></el-input>
+          <h3>文件</h3>
+          <el-upload
+            class="upload-demo"
+            drag="true"
+            action="https://127.0.0.1/posts/"
+            multiple>
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">上传文件不超过50M</div>
+          </el-upload>
+          <el-button @click="homeworkSubmit" type="warning">提交</el-button>
+        </div>
       </el-collapse-item>
     </el-collapse>
   </div>
 </template>
 
 <script>
-import HomeworkSubmit from './local/HomeworkSubmit.vue'
-// import global_ from '../tool/Global.vue'
 export default {
   name: 'StudentHomework',
   data () {
     return {
       final: false,
-      activeName: '1'
+      activeName: '1',
+      input: ''
     }
   },
   props: {
@@ -26,17 +43,13 @@ export default {
   },
   created () {
     console.log('homework created')
-    // this.homeworkList = global_.homeworkList
-    // console.log(global_.homeworkList)
   },
   methods: {
-    childByValue: function (isDetail) {
-      this.isDetail = isDetail
-      this.$emit('toDetail', this.isDetail)
+    HomeworkSubmit () {
+      // HOMWEWORKSUBMIT
     }
   },
   components: {
-    HomeworkSubmit
   }
 }
 </script>
@@ -60,5 +73,11 @@ export default {
   .el-collapse {
     margin: 20px 40px;
     width: 95%;
+  }
+  #homework-submit {
+    width: 850px;
+  }
+  #homework-submit h3 {
+    color: indianred;
   }
 </style>

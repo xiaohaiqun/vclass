@@ -31,6 +31,7 @@
 <script>
 import {USERLOGIN} from '../../api/userLogin.js'
 import * as types from '../../store/types'
+// import store from '../../store/index.js'
 // import req from '../../api/http.js'
 // import axios from 'axios'
 export default {
@@ -68,7 +69,8 @@ export default {
           console.log(res.data)
           _this.userInfo = res.data.data
           _this.$store.commit(types.LOGIN, res.data.data.authorized_token)
-          // console.log(localStorage.state.token)
+          // console.log(localStorage.token)
+          // console.log(store.state.token)
           if (_this.userInfo.user_identifier === 0) {
             _this.$router.push('/home')
           } else {
@@ -79,28 +81,6 @@ export default {
         })
       }
     }
-    // login () {
-    //   if (this.userid === '') {
-    //     this.$message.warning('用户名不能为空哦~~')
-    //   } else if (this.password === '') {
-    //     this.$message.warning('密码不能为空哦~~')
-    //   } else {
-    //     this.$store.dispatch('toLogin', {
-    //       loginUser: this.userid,
-    //       loginPassword: this.password
-    //     }).then(() => {
-    //       this.$store.dispatch('getUser')
-    //       let redirectUrl = decodeURIComponent(this.$route.query.redirect || '/')
-    //       console.log(redirectUrl)
-    //       // 跳转到指定的路由
-    //       this.$router.push({
-    //         path: redirectUrl
-    //       })
-    //     }).catch((error) => {
-    //       console.log(error.response.data.message)
-    //     })
-    //   }
-    // }
   }
 }
 </script>

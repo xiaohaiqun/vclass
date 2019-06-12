@@ -3,9 +3,9 @@
     <!-- <notice-list :courseId="courseId"></notice-list> -->
     <div id="notice-list">
       <ul>
-        <li v-for="notice in noticeList" :key="notice.id">
-          <h3>{{notice.headline}}</h3>
-          <p>{{notice.content}}</p>
+        <li v-for="notice in noticeList" :key="notice.notice_id">
+          <h3>{{notice.notice_title}}</h3>
+          <p>{{notice.notice_content}}</p>
           <el-divider></el-divider>
         </li>
       </ul>

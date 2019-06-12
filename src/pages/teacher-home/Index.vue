@@ -1,12 +1,41 @@
 <template>
-  <div>
+  <div id="teacher">
     <el-container>
       <el-header>vclass</el-header>
 
       <el-container style="height: 680px; border: 1px solid #eee">
-        <my-course :courseList="courseList"></my-course>
+        <!-- <my-course :courseList="courseList" v-on:listenToChild="changeCourse"></my-course> -->
+        <el-aside width="310px" style="background-color: rgb(238, 241, 246)">
+          <el-container id="my-course">
+            <el-header>课程列表</el-header>
+            <el-main id="course-list">
+            <div>
+              <div v-for="course in courseList" :key="course.course_id">
+                <el-divider></el-divider>
+                <p type="text" @click="changeCourse(course.course_id)">{{course.course_name}}</p>
+              </div>
+            </div>
+            </el-main>
+          </el-container>
+        </el-aside>
         <el-main>
-          <course-detail></course-detail>
+          <div id="course-detail">
+            <el-tabs type="border-card" stretch v-model="activeName" @tab-click="handleClick">
+              <el-tab-pane label="通知" name="first">
+                <notice :noticeList = "noticeList" :courseId="courseId"></notice>
+              </el-tab-pane>
+              <el-tab-pane label="作业" name="second">
+                <homework :homeworkList = "homeworkList" :courseId="courseId"></homework>
+              </el-tab-pane>
+              <el-tab-pane label="文件" name="third">
+                <file :fileList = "fileList" :courseId="courseId"></file>
+              </el-tab-pane>
+              <el-tab-pane label="其它" name="fourth">
+                <else></else>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+          <!-- <course-detail :courseId="courseId"></course-detail> -->
         </el-main>
       </el-container>
     </el-container>
@@ -14,35 +43,90 @@
 </template>
 
 <script>
-import MyCourse from '../../components/MyCourse.vue'
-import CourseDetail from '../../components/teacher/TeacherCourseDetail.vue'
+// import global_ from '../../components/tool/Global.vue'
+// import MyCourse from '../../components/MyCourse.vue'
+// import axios from 'axios'
+import notice from '../../components/teacher/TeacherNotice.vue'
+import homework from '../../components/teacher/TeacherHomework.vue'
+import file from '../../components/teacher/TeacherFile.vue'
+import {GETCOURSES} from '../../api/courses.js'
+import req from '../../api/http.js'
 import axios from 'axios'
 export default {
   name: 'Index',
   data () {
     return {
-      courseList: []
+      courseList: [],
+      noticeList: [],
+      homeworkList: [],
+      fileList: [],
+      courseId: '1610029851',
+      test: 0,
+      activeName: 'first',
+      isDetail: false
     }
   },
   components: {
-    MyCourse,
-    CourseDetail
+    notice,
+    homework,
+    file
+  },
+  beforeCreate () {
   },
   created () {
-    axios({
-      method: 'get',
-      url: '/api/home'
-    }).then((res) => {
-      this.courseList = res.data.courseList
-    }).catch(error => {
-      alert('获取课程失败')
-      console.log(error)
-    })
+    this.getCourses()
+    this.getCourseDetail()
+    console.log('index created end')
+    console.log(' index created')
+  },
+  methods: {
+    getCourses () {
+      let _this = this
+      let promise = GETCOURSES()
+      console.log('test')
+      console.log(promise)
+      console.log(localStorage.token)
+      promise.then(function (res) {
+        console.log(res)
+        console.log(res.data.data)
+        _this.courseList = res.data.data.course_list
+        _this.courseId = _this.courseList[0].course_id
+      })
+      // this.axios({
+      //   method: "get",
+      //   url: 'http://vclass.finpluto.tech/',
+      //   headers: {
+      //     Authorization: window.localStorage.getItem("token")
+      //   }
+      //   }).then(function(res) {
+      //     console.log('asjkdasdasdsadsa')
+      //     console.log(res)
+      //   })
+    },
+    getCourseDetail () {
+      let _this = this
+      console.log('getCourseDetail start')
+      let promise = req('get', 'courses/' + _this.courseId)
+      console.log(promise)
+      promise.then(res => {
+        console.log(res)
+        _this.noticeList = res.data.data.notice_list
+        _this.homeworkList = res.data.data.hw_list
+        _this.fileList = res.data.data.file_list
+      })
+    },
+    changeCourse (courseId) {
+      this.courseId = courseId
+    }
   }
 }
 </script>
 
 <style scoped>
+  #teacher {
+    overflow: hidden;
+    height: 100%;
+  }
   .el-header, .el-footer {
     background-color: #B3C0D1;
     color: #333;
@@ -53,8 +137,7 @@ export default {
     background-color: #D3DCE6;
     color: #333;
     text-align: center;
-    line-height: 200px;
-    min-height: 100%
+    line-height: 30px;
   }
   .el-main {
     padding: 0;
@@ -62,11 +145,45 @@ export default {
   body > .el-container {
     margin-bottom: 40px;
   }
-  .el-container:nth-child(5) .el-aside,
-  .el-container:nth-child(6) .el-aside {
-    line-height: 260px;
+  #my-course {
+    color: #660000;
+    overflow: hidden;
   }
-  .el-container:nth-child(7) .el-aside {
-    line-height: 320px;
+  #my-course h3, p, a, span {
+    text-align: center;
+  }
+  #my-course p {
+    cursor: pointer;
+  }
+  #course-list {
+    overflow-y: scroll;
+  }
+  .el-divider {
+    margin: 10px;
+  }
+  .el-button {
+    text-align: center
+  }
+  .el-table {
+    text-align: center;
+  }
+  .el-table-column {
+    text-align: center;
+  }
+  .scroll-area::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+  .scroll-area::-webkit-scrollbar-thumb {/*滚动条方块*/
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 5px #ff2323;
+      background: #ff2323;
+  }
+  .scroll-area::-webkit-scrollbar-track {/*滚动条里面轨道*/
+      /* -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2); */
+      /* border-radius: 10px; */
+      /* background: #EDEDED; */
+      border: none;
+      background: none;
   }
 </style>

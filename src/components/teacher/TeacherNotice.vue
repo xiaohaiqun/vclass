@@ -1,7 +1,26 @@
 <template>
   <div id="teacher-notice">
-    <add-notice></add-notice>
-    <notice-list></notice-list>
+    <div id="add-notice">
+    发布通知
+    <el-button round>发布</el-button>
+    <el-input v-model="headline" placeholder="标题"></el-input>
+    <el-input
+      type="textarea"
+      :rows="3"
+      autosize
+      placeholder="请输入内容"
+      v-model="content">
+    </el-input>
+  </div>
+    <div id="notice-list">
+    <ul>
+      <li v-for="notice in noticeList" :key="notice.notice_id">
+        <h3>{{notice.notice_title}}</h3>
+        <p>{{notice.notice_content}}</p>
+        <el-divider></el-divider>
+      </li>
+    </ul>
+  </div>
   </div>
 </template>
 
@@ -12,11 +31,12 @@ export default {
   name: 'TeacherNotice',
   data () {
     return {
+      newTitle: '',
+      newContent: ''
     }
   },
   components: {
-    AddNotice,
-    NoticeList
+    AddNotice
   }
 }
 </script>
