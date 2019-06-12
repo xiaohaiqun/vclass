@@ -75,7 +75,7 @@ export default {
   },
   created () {
     this.getCourses()
-    this.getCourseDetail()
+    // this.getCourseDetail()
     console.log('index created end')
     console.log(' index created')
   },
@@ -92,16 +92,6 @@ export default {
         _this.courseList = res.data.data.course_list
         _this.courseId = _this.courseList[0].course_id
       })
-      // this.axios({
-      //   method: "get",
-      //   url: 'http://vclass.finpluto.tech/',
-      //   headers: {
-      //     Authorization: window.localStorage.getItem("token")
-      //   }
-      //   }).then(function(res) {
-      //     console.log('asjkdasdasdsadsa')
-      //     console.log(res)
-      //   })
     },
     getCourseDetail () {
       let _this = this

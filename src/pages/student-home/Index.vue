@@ -111,10 +111,13 @@ export default {
       let promise = req('get', 'courses/' + _this.courseId)
       console.log(promise)
       promise.then(res => {
-        console.log(res)
+        console.log('res.data.data')
+        console.log(res.data.data)
         _this.noticeList = res.data.data.notice_list
         _this.homeworkList = res.data.data.hw_list
         _this.fileList = res.data.data.file_list
+        console.log('-----------------')
+        console.log(_this.noticeList)
       })
     },
     changeCourse (row) {
