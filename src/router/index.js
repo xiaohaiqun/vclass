@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../pages/login/Login'
-import Home from '../pages/student-home/Index1'
+import Home from '../pages/student-home/Index'
 import TeacherHome from '../pages/teacher-home/Index'
 
 // import store from '../store/index'
