@@ -10,10 +10,14 @@
             <el-header>课程列表</el-header>
             <el-main id="course-list">
             <div>
-              <div v-for="course in courseList" :key="course.course_id">
+              <!-- <div v-for="course in courseList" :key="course.course_id">
                 <el-divider></el-divider>
                 <p type="text" @click="changeCourse(course.course_id)">{{course.course_name}}</p>
-              </div>
+              </div> -->
+              <el-table :data=courseList @row-click="changeCourse($event)" style="width:100%" show-header=false highlight-current-row >
+                <el-table-column prop="course_name" style="height:0px">
+                </el-table-column>
+              </el-table>
             </div>
             </el-main>
           </el-container>
@@ -74,8 +78,8 @@ export default {
   created () {
     this.getCourses()
     this.getCourseDetail()
-    console.log('index created end')
-    console.log(' index created')
+    // console.log('index created end')
+    // console.log(' index created')
   },
   methods: {
     getCourses () {
@@ -113,8 +117,10 @@ export default {
         _this.fileList = res.data.data.file_list
       })
     },
-    changeCourse (courseId) {
-      this.courseId = courseId
+    changeCourse (row) {
+      console.log('----------------------------')
+      this.courseId = row.course_id
+      console.log(this.courseId)
     }
   }
 }
