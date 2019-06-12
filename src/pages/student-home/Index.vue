@@ -50,7 +50,9 @@ import CourseDetail from '../../components/student/StudentCourseDetail.vue'
 import notice from '../../components/student/StudentNotice.vue'
 import homework from '../../components/student/StudentHomework.vue'
 import file from '../../components/student/StudentFile.vue'
-import {GETCOURSEDETAIL, GETCOURSES} from '../../api/courses.js'
+import {GETCOURSES} from '../../api/courses.js'
+// import req from '../../api/http.js'
+import axios from 'axios'
 export default {
   name: 'Index',
   data () {
@@ -77,13 +79,13 @@ export default {
   created () {
     // this.getCourseList()
     this.getCourses()
-    // this.getCourseDetail()
+    this.getCourseDetail()
     console.log('index created end')
     console.log(' index created')
   },
   methods: {
     getCourses () {
-      let _this = this
+      // let _this = this
       let promise = GETCOURSES()
       console.log('test')
       console.log(promise)
@@ -91,16 +93,28 @@ export default {
       promise.then(function (res) {
         console.log(res)
         console.log(res.data.data)
-        _this.courseList = res.data.data.course_list
+        // _this.courseList = res.data.data.course_list
         // _this.courseId = _this.courseList[0].course_id
+      }).catch(error => {
+        console.log(error)
       })
     },
     getCourseDetail () {
-      let _this = this
+      // let _this = this
       console.log('getCourseDetail start')
-      let promise = GETCOURSEDETAIL({course_id: _this.course_id})
-      promise.then(res => {
+      // let promise = req('get', 'courses/1610029851')
+      // console.log(promise)
+      // promise.then(res => {
+      //   console.log(res)
+      // })
+      axios({
+        method: 'get',
+        url: 'http://vclass.finpluto.tech/courses/1610029851'
+      }).then(res => {
+        console.log('test')
         console.log(res)
+      }).catch(error => {
+        console.log(error)
       })
     },
     changeCourse (courseId) {

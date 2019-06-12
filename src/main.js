@@ -10,6 +10,7 @@ import axios from 'axios'
 // import * as types from './store/types.js'
 import GlobalVariable from './components/tool/GlobalVariable.js'
 
+axios.defaults.headers.common['Authentication'] = store.state.token
 require('./mock')
 Vue.use(ElementUI)
 Vue.config.productionTip = false
