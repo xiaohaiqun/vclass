@@ -74,7 +74,7 @@ export default {
           if (_this.userInfo.user_identifier === 0) {
             _this.$router.push('/home')
           } else {
-            _this.$router.push('/teacher-home')
+            _this.$router.push('/teacher')
           }
         }).catch(function (error) {
           console.log(error)

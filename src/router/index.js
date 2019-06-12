@@ -29,7 +29,7 @@ const router = new Router({
       // }
     },
     {
-      path: '/teacher-home',
+      path: '/teacher',
       component: TeacherHome
     }
   ]

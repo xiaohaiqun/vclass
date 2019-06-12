@@ -12,14 +12,14 @@ let instance = axios.create({
   baseURL: local ? 'http://localhost:8080/api' : 'http://vclass.finpluto.tech/',
   timeout: 6000,
   headers: {
-    Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjA0NDc0MzIsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.7zIX5tDdWzYkrO4XFcPB-SBFTiO4udyhiv4qiSPOcUU'
+    Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjA0MzI4OTAsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.u8zU2x1zInqXn6ed7Re2vgjrVTrSmnE7U5TY2KpS87k'
   }
 })
 
 // 请求拦截器 忽略
 axios.interceptors.request.use(
   config => {
-    console.log('---------------------')
+    console.log('----------------------------localStorage')
     if (store.state.token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
       // config.headers.Authorization = `Bearer + ${store.state.token}`
     }
