@@ -32,8 +32,14 @@ export default {
   data () {
     return {
       newTitle: '',
-      newContent: ''
+      newContent: '',
+      headline:"",
+      content:""
     }
+  },
+    props: {
+    courseId: 0,
+    noticeList: {}
   },
   components: {
     AddNotice

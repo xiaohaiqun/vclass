@@ -66,6 +66,7 @@ export default {
         let test = USERLOGIN(formData)
         console.log('userid:' + this.user.userid)
         test.then(function (res) {
+          console.log('-----------res.data---------')
           console.log(res.data)
           _this.userInfo = res.data.data
           _this.$store.commit(types.LOGIN, res.data.data.authorized_token)
@@ -75,6 +76,7 @@ export default {
             _this.$router.push('/home')
           } else {
             _this.$router.push('/teacher')
+            console.log("-------------路由到教师页面-----------------")
           }
         }).catch(function (error) {
           console.log(error)

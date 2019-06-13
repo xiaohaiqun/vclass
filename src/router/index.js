@@ -11,10 +11,6 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    // {
-    //   path: '/',
-    //   redircet: '/login'
-    // },
     {
       path: '/',
       name: 'Login',
@@ -30,8 +26,9 @@ const router = new Router({
     },
     {
       path: '/teacher',
+      name: 'TeacherHome',
       component: TeacherHome
-    }
+    },
   ]
 })
 

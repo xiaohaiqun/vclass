@@ -4,23 +4,23 @@
       <el-header>vclass</el-header>
 
       <el-container style="height: 680px; border: 1px solid #eee">
-        <!-- <my-course :courseList="courseList" v-on:listenToChild="changeCourse"></my-course> -->
+      
         <el-aside width="310px" style="background-color: rgb(238, 241, 246)">
           <el-container id="my-course">
             <el-header>课程列表</el-header>
             <el-main id="course-list">
             <div>
-              <div v-for="course in courseList" :key="course.course_id">
-                <el-divider></el-divider>
-                <p type="text" @click="changeCourse(course.course_id)">{{course.course_name}}</p>
-              </div>
+              <el-table :data=courseList @row-click="changeCourse($event)" style="width:100%"  highlight-current-row >
+                <el-table-column prop="course_name" style="height:0px">
+                </el-table-column>
+              </el-table>
             </div>
             </el-main>
           </el-container>
         </el-aside>
         <el-main>
           <div id="course-detail">
-            <el-tabs type="border-card" stretch v-model="activeName" @tab-click="handleClick">
+            <el-tabs type="border-card" stretch v-model="activeName">
               <el-tab-pane label="通知" name="first">
                 <notice :noticeList = "noticeList" :courseId="courseId"></notice>
               </el-tab-pane>
@@ -31,14 +31,14 @@
                 <file :fileList = "fileList" :courseId="courseId"></file>
               </el-tab-pane>
               <el-tab-pane label="其它" name="fourth">
-                <else></else>
               </el-tab-pane>
             </el-tabs>
           </div>
-          <!-- <course-detail :courseId="courseId"></course-detail> -->
+        
         </el-main>
       </el-container>
     </el-container>
+    <!-- <h1>hello world</h1> -->
   </div>
 </template>
 
@@ -49,18 +49,20 @@
 import notice from '../../components/teacher/TeacherNotice.vue'
 import homework from '../../components/teacher/TeacherHomework.vue'
 import file from '../../components/teacher/TeacherFile.vue'
-import {GETCOURSES} from '../../api/courses.js'
-import req from '../../api/http.js'
+//import {GETCOURSES} from '../../api/courses.js'
+// import req from '../../api/http.js'
 import axios from 'axios'
+
+
 export default {
-  name: 'Index',
+  name: 'teacher',
   data () {
     return {
       courseList: [],
       noticeList: [],
       homeworkList: [],
       fileList: [],
-      courseId: '1610029851',
+      courseId: '',
       test: 0,
       activeName: 'first',
       isDetail: false
@@ -72,48 +74,74 @@ export default {
     file
   },
   beforeCreate () {
+    axios.defaults.baseURL = 'http://vclass.finpluto.tech/'
+    axios.defaults.headers.common['Authorization'] = 'eyJ0eXAiOiJKV1QiLCJhbGci'
+    +'OiJIUzI1NiJ9.eyJleHAiOjE1NjA1MjE5NzMsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.IF_Aib6TKVrrYlsC7GiGrMi_UPCkewHUik7i-hxIDWg'
   },
   created () {
+    console.log(' -------------------index created')
     this.getCourses()
-    // this.getCourseDetail()
-    console.log('index created end')
-    console.log(' index created')
+    this.getCourseDetail()
+    console.log('--------------index created end')
+   
   },
   methods: {
     getCourses () {
       let _this = this
-      let promise = GETCOURSES()
       console.log('test')
-      console.log(promise)
-      console.log(localStorage.token)
-      promise.then(function (res) {
-        console.log(res)
-        console.log(res.data.data)
-        _this.courseList = res.data.data.course_list
-        _this.courseId = _this.courseList[0].course_id
-      })
+      // let promise = GETCOURSES()
+      
+      // console.log(promise)
+      // console.log(localStorage.token)
+      // promise.then(function (res) {
+      //   console.log(res)
+      //   console.log(res.data.data)
+      //   _this.courseList = res.data.data.course_list
+      //   _this.courseId = _this.courseList[0].course_id
+      // })
+      axios.get('http://vclass.finpluto.tech/')
+      .then(res=>{_this.courseList=res.data.data.course_list
+                  _this.courseId=_this.courseList[0].course_id
+                  console.log('-----------_this.courseList-------------')
+                  console.log(_this.courseList)}
+                  )
     },
     getCourseDetail () {
-      let _this = this
+      let _this = this      
       console.log('getCourseDetail start')
-      let promise = req('get', 'courses/' + _this.courseId)
-      console.log(promise)
-      promise.then(res => {
-        console.log(res)
-        _this.noticeList = res.data.data.notice_list
-        _this.homeworkList = res.data.data.hw_list
-        _this.fileList = res.data.data.file_list
-      })
+      // let promise = req('get', 'courses/' + _this.courseId)
+      // console.log(promise)
+      // promise.then(res => {
+      //   console.log(res)
+      //   _this.noticeList = res.data.data.notice_list
+      //   _this.homeworkList = res.data.data.hw_list
+      //   _this.fileList = res.data.data.file_list
+      // })
+      axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
+      .then(res=>{_this.noticeList=res.data.data.notice_list
+                  _this.homeworkList=res.data.data.hw_list
+                  _this.fileList=res.data.data.file_list
+                  console.log('-----------res.data.data-------------')
+                  console.log(res.data.data)
+                  console.log('---------res.data.data.hw_list----------')
+                  console.log(res.data.data.hw_list)}
+                  )
     },
-    changeCourse (courseId) {
-      this.courseId = courseId
-    }
+    changeCourse (row) {
+      console.log('---------changecourse------------------')
+      this.courseId = row.course_id
+      console.log(this.courseId)
+      this.getCourseDetail()
+    },
+    
+    handleClick(){
+    },
   }
 }
 </script>
 
-<style scoped>
-  #teacher {
+ <style scoped>
+   #teacher {
     overflow: hidden;
     height: 100%;
   }
@@ -166,7 +194,7 @@ export default {
   }
   .scroll-area::-webkit-scrollbar-thumb {/*滚动条方块*/
       border-radius: 10px;
-      -webkit-box-shadow: inset 0 0 5px #ff2323;
+      /* -webkit-box-shadow: inset 0 0 5px #ff2323; */
       background: #ff2323;
   }
   .scroll-area::-webkit-scrollbar-track {/*滚动条里面轨道*/
@@ -175,5 +203,5 @@ export default {
       /* background: #EDEDED; */
       border: none;
       background: none;
-  }
+  } 
 </style>

@@ -7,21 +7,18 @@ import store from '../store/index'
 // }
 
 let local = false
-
+// 
 let instance = axios.create({
   baseURL: local ? 'http://localhost:8080/api' : 'http://vclass.finpluto.tech/',
-  timeout: 6000,
-  headers: {
-    Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjA0MzI4OTAsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.u8zU2x1zInqXn6ed7Re2vgjrVTrSmnE7U5TY2KpS87k'
-  }
+  timeout: 15000,
 })
 
 // 请求拦截器 忽略
-axios.interceptors.request.use(
+instance.interceptors.request.use(
   config => {
     console.log('----------------------------localStorage')
     if (store.state.token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
-      // config.headers.Authorization = `Bearer + ${store.state.token}`
+      config.headers.Authorization = `Bearer + ${store.state.token}`
     }
     return config
   },

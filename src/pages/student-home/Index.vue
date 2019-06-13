@@ -10,10 +10,6 @@
             <el-header>课程列表</el-header>
             <el-main id="course-list">
             <div>
-              <!-- <div v-for="course in courseList" :key="course.course_id">
-                <el-divider></el-divider>
-                <p type="text" @click="changeCourse(course.course_id)">{{course.course_name}}</p>
-              </div> -->
               <el-table :data=courseList @row-click="changeCourse($event)" style="width:100%"  highlight-current-row >
                 <el-table-column prop="course_name" style="height:0px">
                 </el-table-column>
@@ -51,9 +47,10 @@
 import notice from '../../components/student/StudentNotice.vue'
 import homework from '../../components/student/StudentHomework.vue'
 import file from '../../components/student/StudentFile.vue'
-import {GETCOURSES} from '../../api/courses.js'
-import req from '../../api/http.js'
+// import {GETCOURSES} from '../../api/courses.js'
+// import req from '../../api/http.js'
 import axios from 'axios'
+import store from '../../store/index'
 export default {
   name: 'Index',
   data () {
@@ -74,54 +71,37 @@ export default {
     file
   },
   beforeCreate () {
+    axios.defaults.baseURL = 'http://vclass.finpluto.tech/'
+    axios.defaults.headers.common['Authorization'] =`${store.state.token}`
+    console.log('-------------tocken----------')
+    console.log(`${store.state.token}`)
   },
   created () {
     this.getCourses()
     this.getCourseDetail()
-    // console.log('index created end')
-    // console.log(' index created')
   },
   methods: {
     getCourses () {
       let _this = this
-      let promise = GETCOURSES()
-      // console.log('test')
-      // console.log(promise)
-      // console.log(localStorage.token)
-      promise.then(function (res) {
-        // console.log(res)
-        // console.log(res.data.data)
-        console.log('------------------getcourse--------------------:')
-        
-        _this.courseList = res.data.data.course_list
-        _this.courseId = _this.courseList[0].course_id
-        console.log(_this.courseId)
-      })
-      // this.axios({
-      //   method: "get",
-      //   url: 'http://vclass.finpluto.tech/',
-      //   headers: {
-      //     Authorization: window.localStorage.getItem("token")
-      //   }
-      //   }).then(function(res) {
-      //     console.log('asjkdasdasdsadsa')
-      //     console.log(res)
-      //   })
-    },
+       axios.get('http://vclass.finpluto.tech/')
+      .then(res=>{_this.courseList=res.data.data.course_list
+                  _this.courseId=_this.courseList[0].course_id
+                  console.log('-----------_this.courseList-------------')
+                  console.log(_this.courseList)}
+                  )
+      },
     getCourseDetail () {
       let _this = this
-      console.log('---------------------getCourseDetail start--------------------')
-      let promise = req('get', 'courses/' + _this.courseId)
-      // console.log(promise)
-      promise.then(res => {
-        // console.log('res.data.data')
-        // console.log(res.data.data)
-        _this.noticeList = res.data.data.notice_list
-        _this.homeworkList = res.data.data.hw_list
-        _this.fileList = res.data.data.file_list
-        console.log('-------noticelist:----------')
-        console.log(_this.noticeList)
-      })
+       axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
+      .then(res=>{_this.noticeList=res.data.data.notice_list
+                  _this.homeworkList=res.data.data.hw_list
+                  _this.fileList=res.data.data.file_list
+                  console.log('-----------res.data.data-------------')
+                  console.log(res.data.data)
+                  console.log('---------res.data.data.hw_list----------')
+                  console.log(res.data.data.hw_list)}
+                  )
+  
     },
     changeCourse (row) {
       console.log('---------changecourse------------------')
