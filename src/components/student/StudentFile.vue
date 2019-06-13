@@ -35,7 +35,7 @@ export default {
     }
   },
   props: {
-    fileList: [],
+    fileList: {},
     courseId: 0
   },
   created () {

@@ -14,7 +14,7 @@
                 <el-divider></el-divider>
                 <p type="text" @click="changeCourse(course.course_id)">{{course.course_name}}</p>
               </div> -->
-              <el-table :data=courseList @row-click="changeCourse($event)" style="width:100%" show-header=false highlight-current-row >
+              <el-table :data=courseList @row-click="changeCourse($event)" style="width:100%"  highlight-current-row >
                 <el-table-column prop="course_name" style="height:0px">
                 </el-table-column>
               </el-table>
@@ -24,7 +24,8 @@
         </el-aside>
         <el-main>
           <div id="course-detail">
-            <el-tabs type="border-card" stretch v-model="activeName" @tab-click="handleClick">
+            <!-- @tab-click="handleClick" -->
+            <el-tabs type="border-card" stretch v-model="activeName" >
               <el-tab-pane label="通知" name="first">
                 <notice :noticeList = "noticeList" :courseId="courseId"></notice>
               </el-tab-pane>
@@ -35,7 +36,6 @@
                 <file :fileList = "fileList" :courseId="courseId"></file>
               </el-tab-pane>
               <el-tab-pane label="其它" name="fourth">
-                <else></else>
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -62,7 +62,7 @@ export default {
       noticeList: [],
       homeworkList: [],
       fileList: [],
-      courseId: '1610029851',
+      courseId: '',
       test: 0,
       activeName: 'first',
       isDetail: false
@@ -85,14 +85,17 @@ export default {
     getCourses () {
       let _this = this
       let promise = GETCOURSES()
-      console.log('test')
-      console.log(promise)
-      console.log(localStorage.token)
+      // console.log('test')
+      // console.log(promise)
+      // console.log(localStorage.token)
       promise.then(function (res) {
-        console.log(res)
-        console.log(res.data.data)
+        // console.log(res)
+        // console.log(res.data.data)
+        console.log('------------------getcourse--------------------:')
+        
         _this.courseList = res.data.data.course_list
         _this.courseId = _this.courseList[0].course_id
+        console.log(_this.courseId)
       })
       // this.axios({
       //   method: "get",
@@ -107,23 +110,28 @@ export default {
     },
     getCourseDetail () {
       let _this = this
-      console.log('getCourseDetail start')
+      console.log('---------------------getCourseDetail start--------------------')
       let promise = req('get', 'courses/' + _this.courseId)
-      console.log(promise)
+      // console.log(promise)
       promise.then(res => {
-        console.log('res.data.data')
-        console.log(res.data.data)
+        // console.log('res.data.data')
+        // console.log(res.data.data)
         _this.noticeList = res.data.data.notice_list
         _this.homeworkList = res.data.data.hw_list
         _this.fileList = res.data.data.file_list
-        console.log('-----------------')
+        console.log('-------noticelist:----------')
         console.log(_this.noticeList)
       })
     },
     changeCourse (row) {
-      console.log('----------------------------')
+      console.log('---------changecourse------------------')
       this.courseId = row.course_id
       console.log(this.courseId)
+      this.getCourseDetail()
+    },
+    handleClick(){
+      console.log('------------handclick---------------')
+      getCourseDetail()
     }
   }
 }

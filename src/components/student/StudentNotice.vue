@@ -25,7 +25,7 @@ export default {
   },
   props: {
     courseId: 0,
-    noticeList: []
+    noticeList: {}
   },
   created () {
     // this.noticeList = global_.noticeList

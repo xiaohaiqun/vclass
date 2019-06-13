@@ -1,7 +1,7 @@
 <template>
   <div id="student-homework">
     <el-collapse v-for="homework in homeworkList" :key="homework.hw_id" v-model="activeName" accordion>
-      <el-collapse-item title="homework.hw_title">
+      <el-collapse-item :title="homework.hw_title">
         <div id="homework-submit">
           <!-- <h3>作业标题</h3>
           <p>adhkshdkjhsalfkhkfdshkj</p> -->
@@ -12,14 +12,14 @@
           <h3>文件</h3>
           <el-upload
             class="upload-demo"
-            drag="true"
+            :drag= 'true'
             action="https://127.0.0.1/posts/"
             multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">上传文件不超过50M</div>
           </el-upload>
-          <el-button @click="homeworkSubmit" type="warning">提交</el-button>
+          <el-button @click="HomeworkSubmit" type="warning">提交</el-button>
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -37,7 +37,7 @@ export default {
     }
   },
   props: {
-    homeworkList: [],
+    homeworkList: {},
     courseId: 0,
     isDetail: false
   },
