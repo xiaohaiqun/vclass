@@ -31,6 +31,7 @@
 
 <script>
 // import axios from 'axios'
+import axios from 'axios'
 import global_ from './tool/Global.vue'
 export default {
   name: 'FileList',

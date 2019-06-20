@@ -5,15 +5,18 @@
         <div id="homework-submit">
           <!-- <h3>作业标题</h3>
           <p>adhkshdkjhsalfkhkfdshkj</p> -->
-          <h3>情况</h3>
-          <p>提交状态:<span>已交</span></p>
+          <h3>作业内容</h3>
+          <p>{{homework.hw_content}}</p>
+          <h3>deadline</h3>
+          <p>{{homework.deadline}}</p>
+          <hr>
           <h3>作业说明</h3>
           <el-input type="textarea" v-model="input" placeholder="请输入作业说明"></el-input>
           <h3>文件</h3>
           <el-upload
             class="upload-demo"
             :drag= 'true'
-            action="https://127.0.0.1/posts/"
+            :action="doUpload"
             multiple>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -47,6 +50,10 @@ export default {
   methods: {
     HomeworkSubmit () {
       // HOMWEWORKSUBMIT
+
+    },
+    doUpload(){
+      return 'http://vclass.finpluto.tech/courses/**/homeworks/'+homework.homework_id+'/upload'
     }
   },
   components: {

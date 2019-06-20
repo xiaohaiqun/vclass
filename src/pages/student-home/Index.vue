@@ -43,7 +43,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
 import notice from '../../components/student/StudentNotice.vue'
 import homework from '../../components/student/StudentHomework.vue'
 import file from '../../components/student/StudentFile.vue'
@@ -72,9 +71,7 @@ export default {
   },
   beforeCreate () {
     axios.defaults.baseURL = 'http://vclass.finpluto.tech/'
-    axios.defaults.headers.common['Authorization'] =`${store.state.token}`
-    console.log('-------------tocken----------')
-    console.log(`${store.state.token}`)
+    axios.defaults.headers.common['Authorization'] =store.state.token
   },
   created () {
     this.getCourses()
@@ -84,14 +81,19 @@ export default {
     getCourses () {
       let _this = this
        axios.get('http://vclass.finpluto.tech/')
-      .then(res=>{_this.courseList=res.data.data.course_list
-                  _this.courseId=_this.courseList[0].course_id
+      .then(res=>{this.courseList=res.data.data.course_list
+                  this.courseId=this.courseList[0].course_id
                   console.log('-----------_this.courseList-------------')
-                  console.log(_this.courseList)}
+                  console.log(this.courseList)
+                  console.log('-----------courseId--------------------')
+                  console.log( this.courseId)}
                   )
       },
     getCourseDetail () {
       let _this = this
+      console.log('---------请求：-----------------')
+      console.log('---id:'+_this.courseId)
+      console.log('http://vclass.finpluto.tech/courses/'+_this.courseId)
        axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
       .then(res=>{_this.noticeList=res.data.data.notice_list
                   _this.homeworkList=res.data.data.hw_list

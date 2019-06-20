@@ -3,7 +3,7 @@
     <!-- <file-list :courseId="courseId"></file-list> -->
     <div id="file">
     <el-main>
-      <el-table :data="fileList" height="500px">
+      <el-table :data="fileList" height="500px" @row-click="file_download($event)">
         <el-table-column prop="file_name" label="文件名称" width="140">
         </el-table-column>
         <el-table-column prop="display_path" label="文件位置" width="120">
@@ -26,7 +26,7 @@
 <script>
 // import FileList from '../FileList.vue'
 // import global_ from '../tool/Global.vue'
-
+import axios from 'axios'
 export default {
   name: 'StudentFile',
   data () {
@@ -44,6 +44,26 @@ export default {
     // console.log(this.fileList)
   },
   methods: {
+    file_download(row){
+      let url = 'http://vclass.finpluto.tech/files/'+row.file_id
+      axios({
+      method:'get',
+      url:url,
+      responseType:'blob',
+      })
+      .then((data) => {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(data.data)
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', row.file_name)
+        document.body.appendChild(link)
+        link.click()
+      })
+    }  
   },
   components: {
     // FileList
