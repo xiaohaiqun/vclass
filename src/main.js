@@ -9,14 +9,16 @@ import router from './router'
 import axios from 'axios'
 // import * as types from './store/types.js'
 import GlobalVariable from './components/tool/GlobalVariable.js'
+import Qs from 'qs' // 引入方式
 
 axios.defaults.headers.common['Authentication'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjA0NDc0MzIsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.7zIX5tDdWzYkrO4XFcPB-SBFTiO4udyhiv4qiSPOcUU'
 
-// require('./mock')
+require('./mock')
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.config.devtools = true
 
+Vue.prototype.$qs = Qs // 全局加载
 Vue.prototype.global = GlobalVariable
 
 // 请求拦截器 忽略
