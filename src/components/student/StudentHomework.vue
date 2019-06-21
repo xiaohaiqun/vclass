@@ -1,7 +1,7 @@
 <template>
   <div id="student-homework">
-    <el-collapse v-for="homework in homeworkList" :key="homework.hw_id" v-model="activeName" accordion>
-      <el-collapse-item :title="homework.hw_title">
+    <el-collapse v-for="homework in homeworkList" :key="homework.hw_id" v-model="activeName" accordion :change='change_url(homework)'>
+      <el-collapse-item :title="homework.hw_title" >
         <div id="homework-submit">
           <!-- <h3>作业标题</h3>
           <p>adhkshdkjhsalfkhkfdshkj</p> -->
@@ -16,13 +16,16 @@
           <el-upload
             class="upload-demo"
             :drag= 'true'
-            :action="doUpload"
-            multiple>
+            action=''
+            :http-request="uploadFile"
+            :homework="homework"
+             multiple
+            :file-list="fileList">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">上传文件不超过50M</div>
-          </el-upload>
-          <el-button @click="HomeworkSubmit" type="warning">提交</el-button>
+          </el-upload>` 
+          <el-button @click="HomeworkSubmit(homework)" type="warning">提交</el-button>
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -30,13 +33,17 @@
 </template>
 
 <script>
+import axios from 'axios'
+import store from '../../store/index'
 export default {
   name: 'StudentHomework',
   data () {
     return {
       final: false,
       activeName: '1',
-      input: ''
+      input: '',
+      fileList:[],
+      url:''
     }
   },
   props: {
@@ -48,13 +55,50 @@ export default {
     console.log('homework created')
   },
   methods: {
-    HomeworkSubmit () {
+    HomeworkSubmit (homework) {
       // HOMWEWORKSUBMIT
-
+        console.log('submitUrl:'+'http://vclass.finpluto.tech/courses/1610029851/homeworks/'+
+        homework.hw_id+'/submit')
+        axios.post('http://vclass.finpluto.tech/courses/1610029851/homeworks/'+
+        homework.hw_id+'/submit')
     },
-    doUpload(){
-      return 'http://vclass.finpluto.tech/courses/**/homeworks/'+homework.homework_id+'/upload'
+    change_url(homework){
+      console.log('------------url-change--------------')
+      this.url='http://vclass.finpluto.tech/courses/**/homeworks/'+
+        homework.hw_id+'/upload'
+        console.log(this.url)
+    },
+    doUpload(homework){
+      return 'http://vclass.finpluto.tech/courses/**/homeworks/'+
+        homework.hw_id+'/submit'
+    },
+     handleSuccess(response, file, fileList) {
+      this.fileList = fileList
+     },
+ 
+     uploadFile (files) {
+        // 发起请求
+       let config = {
+        //添加请求头
+        headers: { "Content-Type": "multipart/form-data",
+                   "Accept":'application/json',
+                    "Authorization" : store.state.token 
+                    }
+       }
+       console.log('-------------postUrl-----------')
+       console.log(this.url)
+       axios.post(this.url, config, {
+        transformRequest: [() => {
+        let formData = new FormData()
+        formData.append('file', files.file)
+        return formData
+       }
+      ]
+     }).then(data => {
+      console.log(data)
+     })
     }
+
   },
   components: {
   }
