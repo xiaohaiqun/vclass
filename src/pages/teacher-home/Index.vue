@@ -52,6 +52,7 @@ import file from '../../components/teacher/TeacherFile.vue'
 //import {GETCOURSES} from '../../api/courses.js'
 // import req from '../../api/http.js'
 import axios from 'axios'
+import store from '../../store/index'
 
 
 export default {
@@ -75,8 +76,9 @@ export default {
   },
   beforeCreate () {
     axios.defaults.baseURL = 'http://vclass.finpluto.tech/'
-    axios.defaults.headers.common['Authorization'] = 'eyJ0eXAiOiJKV1QiLCJhbGci'
-    +'OiJIUzI1NiJ9.eyJleHAiOjE1NjA1MjE5NzMsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.IF_Aib6TKVrrYlsC7GiGrMi_UPCkewHUik7i-hxIDWg'
+    // axios.defaults.headers.common['Authorization'] = 'eyJ0eXAiOiJKV1QiLCJhbGci'
+    // +'OiJIUzI1NiJ9.eyJleHAiOjE1NjA1MjE5NzMsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.IF_Aib6TKVrrYlsC7GiGrMi_UPCkewHUik7i-hxIDWg'
+    axios.defaults.headers.common['Authorization'] =store.state.token
   },
   created () {
     console.log(' -------------------index created')

@@ -2,7 +2,7 @@
   <div id="teacher-notice">
     <div id="add-notice">
     发布通知
-    <el-button round>发布</el-button>
+    <el-button round @click="addNotice">发布</el-button>
     <el-input v-model="headline" placeholder="标题"></el-input>
     <el-input
       type="textarea"
@@ -27,22 +27,62 @@
 <script>
 import AddNotice from './local/AddNotice.vue'
 import NoticeList from '../NoticeList.vue'
+import axios from 'axios'
+import store from '../../store/index'
+
 export default {
   name: 'TeacherNotice',
   data () {
     return {
       newTitle: '',
       newContent: '',
-      headline:"",
-      content:""
+      headline:'',
+      content:''
     }
   },
-    props: {
-    courseId: 0,
+  props: {
+    courseId: '',
     noticeList: {}
   },
   components: {
     AddNotice
+  },
+  beforeCreate () {
+    axios.defaults.baseURL = 'http://vclass.finpluto.tech/'
+    // axios.defaults.headers.common['Authorization'] = 'eyJ0eXAiOiJKV1QiLCJhbGci'
+    // +'OiJIUzI1NiJ9.eyJleHAiOjE1NjA1MjE5NzMsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.IF_Aib6TKVrrYlsC7GiGrMi_UPCkewHUik7i-hxIDWg'
+    axios.defaults.headers.common['Authorization'] =store.state.token
+    console.log(store.state.token)
+  },
+  methods: {
+    addNotice () {
+      let _this = this
+      console
+      console.log('------courseId---------')
+      console.log(_this.courseId)
+      let url = 'http://vclass.finpluto.tech/courses/'+_this.courseId+'/notices'
+      console.log('------url-----------')
+      console.log(url)
+
+      var readyData=_this.$qs.stringify({
+        notice_content: _this.content,
+        notice_title: _this.headline
+      })
+      
+      axios.post(url, readyData)
+      .then(res => {
+        console.log('------addnotice res-------')
+        console.log(res)
+        _this.$notify({
+          title: '提示',
+          message: '发布通知成功'
+        });
+        _this.content = ''
+        _this.headline = ''
+      }).catch(error => {
+        console.log(error)
+      })
+    }
   }
 }
 </script>
@@ -54,5 +94,8 @@ export default {
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100%;
+  }
+  #add-notice {
+    width: 80%
   }
 </style>

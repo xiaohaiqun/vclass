@@ -28,6 +28,7 @@ export default {
 <style scoped>
   #add-notice {
     margin: 20px 40px;
+    width: 80%;
   }
   .el-button {
     float: right;
