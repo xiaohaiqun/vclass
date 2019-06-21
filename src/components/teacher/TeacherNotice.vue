@@ -95,7 +95,11 @@ export default {
     overflow-x: hidden;
     width: 100%;
   }
+  ul {
+    list-style-type: none;
+  }
   #add-notice {
+    margin: 20px 40px;
     width: 80%
   }
 </style>
