@@ -1,6 +1,6 @@
 <template>
   <div id="student-homework">
-    <el-collapse v-for="homework in homeworkList" :key="homework.hw_id" v-model="activeName" accordion>
+    <el-collapse v-for="homework in homeworkList" :key="homework.hw_id" v-model="activeName" accordion :change='change_url(homework)'>
       <el-collapse-item :title="homework.hw_title" >
         <div id="homework-submit">
           <!-- <h3>作业标题</h3>
@@ -17,7 +17,6 @@
             class="upload-demo"
             :drag= 'true'
             action=''
-            :before-upload="beforeUpload(homework)"
             :http-request="uploadFile"
             :homework="homework"
              multiple
@@ -63,12 +62,14 @@ export default {
         axios.post('http://vclass.finpluto.tech/courses/1610029851/homeworks/'+
         homework.hw_id+'/submit')
     },
-    beforeUpload(homework){
-      this.url='http://vclass.finpluto.tech/courses/1610029851/homeworks/'+
-        homework.hw_id+'/submit'
+    change_url(homework){
+      console.log('------------url-change--------------')
+      this.url='http://vclass.finpluto.tech/courses/**/homeworks/'+
+        homework.hw_id+'/upload'
+        console.log(this.url)
     },
     doUpload(homework){
-      return 'http://vclass.finpluto.tech/courses/1610029851/homeworks/'+
+      return 'http://vclass.finpluto.tech/courses/**/homeworks/'+
         homework.hw_id+'/submit'
     },
      handleSuccess(response, file, fileList) {
