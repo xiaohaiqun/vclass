@@ -1,6 +1,6 @@
 <template>
   <div id="teacher-homework">
-    <div id="add-notice">
+    <div id="add-homework">
       发布作业
       <el-button round @click="addHomework">发布</el-button>
       <el-input v-model="headline" placeholder="标题"></el-input>
@@ -23,28 +23,30 @@
         </el-date-picker>
       </div>
     </div>
-    <el-collapse v-for="homework in homeworkList" :key="homework.id" v-model="activeName" accordion>
-      <el-collapse-item :title="homework.hw_title">
+
+    <div id="homework-list">
+    <el-collapse v-for="(homework,index) in homeworkList" :key="homework.hw_id" v-model="activeName" accordion>
+      <el-collapse-item :title="homework.hw_title" >
         <div id="homework-detail">
+          <el-button type="danger" size="mini" @click="deleteHomework(index)">删除</el-button>
           <h3>作业内容</h3>
-          <p>{{content}}</p>
-          <h3>已交名单</h3>
-          <el-table :data="finishedList">
-            <el-table-column prop="name" label="" @click="change"></el-table-column>
-          </el-table>
-          <h3>未交名单</h3>
-          <el-table :data="unfinishedList">
-            <el-table-column prop="name" label=""></el-table-column>
-          </el-table>
+          <p>{{homework.hw_content}}</p>
+          <h3 @click="getRatings(homework.hw_id)">名单</h3>
+            <el-table :data="ratingList" @row-click="rateHomework($event)">
+              <el-table-column prop="username" label=""></el-table-column>
+            </el-table>
         </div>
       </el-collapse-item>
     </el-collapse>
+    </div>
+
   </div>
 </template>
 
 <script>
 import HomeworkDetail from './local/HomeworkDetail.vue'
 import axios from 'axios'
+import store from '../../store/index'
 // import data from '../../static/data.json'
 export default {
   name: 'Homework',
@@ -57,7 +59,7 @@ export default {
       deadline: '',
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() > Date.now();
+          return time.getTime() < Date.now();
         },
         shortcuts: [{
           text: '今天',
@@ -87,12 +89,19 @@ export default {
           }
         }]
       },
+      hw_id: '',
+      show: false,
+      ratingList: []
     }
   },
   props: {
-    courseId: 0,
+    courseId: '',
     isDetail: false,
     homeworkList: []
+  },
+  beforeCreate () {
+    axios.defaults.baseURL = 'http://vclass.finpluto.tech/'
+    axios.defaults.headers.common['Authorization'] =store.state.token
   },
   created: {
 
@@ -129,10 +138,63 @@ export default {
         _this.content = ''
         _this.headline = ''
         _this.deadline = ''
+        _this.updateCourseDetail()
       }).catch(error => {
         console.log(error)
       })
-    }
+    },
+    deleteHomework (index) {
+      console.log('---------deleteHomework--------')
+      let _this = this
+      let homework_id = _this.homeworkList[index].hw_id
+      console.log('----homework_id-----')
+      console.log(homework_id)
+      let url = 'http://vclass.finpluto.tech/courses/**/homeworks/'+homework_id
+      axios.delete(url)
+      .then(res => {
+        console.log('------deletehomework res-------')
+        console.log(res)
+        _this.$notify({
+          title: '提示',
+          message: '作业删除成功'
+        })
+        _this.updateCourseDetail()
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    getRatings (hw_id) {
+      let _this = this
+      _this.hw_id = hw_id
+      _this.show = !_this.show
+      let url = 'http://vclass.finpluto.tech/courses/'+_this.courseId+'/homeworks/'+_this.hw_id+'/ratings'
+      console.log(store.state.token)
+      console.log(_this.hw_id)
+      console.log(_this.courseId)
+      console.log('---------url------')
+      console.log(url)
+      axios.get(url)
+      .then(res => {
+        console.log(res)
+        _this.ratingList = res.data.data.rating_list
+      })
+    },
+    rateHomework (row) {
+      let user_id = row.userid
+      // 跳转到批改页面
+    },
+    updateCourseDetail () {
+      let _this = this      
+      console.log('getCourseDetail start')
+      axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
+      .then(res=>{
+        _this.homeworkList=res.data.data.hw_list
+        _this.$notify({
+          title: '提示',
+          message: '作业更新'
+        })
+      })
+    },
   },
   components: {
     HomeworkDetail
@@ -156,9 +218,12 @@ export default {
     margin-top: 20px;
     /* width: 61.8%; */
   }
-  #add-notice {
+  #add-homework {
     margin: 20px 40px;
     width: 80%;
+  }
+  #homework-list {
+    width: 80%
   }
   .el-button {
       float: right;
@@ -166,5 +231,8 @@ export default {
   .el-collapse {
     margin: 20px 40px;
     width: 95%;
+  }
+  .el-button {
+    float: right;
   }
 </style>
