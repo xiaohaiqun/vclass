@@ -49,20 +49,26 @@ export default {
       axios({
       method:'get',
       url:url,
-      responseType:'blob',
+      headers: {'Content-Type': 'application/octet-stream'}, 
+      responseType:'arraybuffer',
       })
       .then((data) => {
         if (!data) {
             return
         }
-        let url = window.URL.createObjectURL(data.data)
+        console.log('------------data.data---------')
+        console.log(data)
+        var binaryData = [data.data]
+        let url = window.URL.createObjectURL(new Blob([data.data]),{type:'application/octet-stream'})
         let link = document.createElement('a')
         link.style.display = 'none'
         link.href = url
         link.setAttribute('download', row.file_name)
         document.body.appendChild(link)
         link.click()
+      
       })
+    
     }  
   },
   components: {

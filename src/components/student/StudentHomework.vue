@@ -1,7 +1,7 @@
 <template>
   <div id="student-homework">
-    <el-collapse v-for="homework in homeworkList" :key="homework.hw_id" v-model="activeName" accordion :change='change_url(homework)'>
-      <el-collapse-item :title="homework.hw_title" >
+    <el-collapse v-for="homework in homeworkList" :key="homework.hw_id" v-model="activeName" accordion @change='change_url(homework)' >
+      <el-collapse-item :title="homework.hw_title" @click='change_url(homework)'>
         <div id="homework-submit">
           <!-- <h3>作业标题</h3>
           <p>adhkshdkjhsalfkhkfdshkj</p> -->
@@ -24,7 +24,7 @@
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">上传文件不超过50M</div>
-          </el-upload>` 
+          </el-upload>
           <el-button @click="HomeworkSubmit(homework)" type="warning">提交</el-button>
         </div>
       </el-collapse-item>
