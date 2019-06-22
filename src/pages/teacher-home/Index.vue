@@ -76,8 +76,6 @@ export default {
   },
   beforeCreate () {
     axios.defaults.baseURL = 'http://vclass.finpluto.tech/'
-    // axios.defaults.headers.common['Authorization'] = 'eyJ0eXAiOiJKV1QiLCJhbGci'
-    // +'OiJIUzI1NiJ9.eyJleHAiOjE1NjA1MjE5NzMsInVzZXJuYW1lIjoiMjAxNjExMTQwMDEwIn0.IF_Aib6TKVrrYlsC7GiGrMi_UPCkewHUik7i-hxIDWg'
     axios.defaults.headers.common['Authorization'] =store.state.token
   },
   created () {
@@ -111,14 +109,6 @@ export default {
     getCourseDetail () {
       let _this = this      
       console.log('getCourseDetail start')
-      // let promise = req('get', 'courses/' + _this.courseId)
-      // console.log(promise)
-      // promise.then(res => {
-      //   console.log(res)
-      //   _this.noticeList = res.data.data.notice_list
-      //   _this.homeworkList = res.data.data.hw_list
-      //   _this.fileList = res.data.data.file_list
-      // })
       axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
       .then(res=>{_this.noticeList=res.data.data.notice_list
                   _this.homeworkList=res.data.data.hw_list

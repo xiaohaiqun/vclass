@@ -23,20 +23,23 @@
         </el-date-picker>
       </div>
     </div>
-    <el-collapse v-for="homework in homeworkList" :key="homework.hw_id" v-model="activeName" accordion>
+
+    <div id="homework-list">
+    <el-collapse v-for="(homework,index) in homeworkList" :key="homework.hw_id" v-model="activeName" accordion>
       <el-collapse-item :title="homework.hw_title" >
         <div id="homework-detail">
+          <el-button type="danger" size="mini" @click="deleteHomework(index)">删除</el-button>
           <h3>作业内容</h3>
           <p>{{homework.hw_content}}</p>
           <h3 @click="getRatings(homework.hw_id)">名单</h3>
-          <div :v-if="show">
-            <el-table :data="ratingList">
-            <el-table-column prop="username" label=""></el-table-column>
-          </el-table>
-          </div>
+            <el-table :data="ratingList" @row-click="rateHomework($event)">
+              <el-table-column prop="username" label=""></el-table-column>
+            </el-table>
         </div>
       </el-collapse-item>
     </el-collapse>
+    </div>
+
   </div>
 </template>
 
@@ -56,7 +59,7 @@ export default {
       deadline: '',
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() > Date.now();
+          return time.getTime() < Date.now();
         },
         shortcuts: [{
           text: '今天',
@@ -135,6 +138,27 @@ export default {
         _this.content = ''
         _this.headline = ''
         _this.deadline = ''
+        _this.updateCourseDetail()
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    deleteHomework (index) {
+      console.log('---------deleteHomework--------')
+      let _this = this
+      let homework_id = _this.homeworkList[index].hw_id
+      console.log('----homework_id-----')
+      console.log(homework_id)
+      let url = 'http://vclass.finpluto.tech/courses/**/homeworks/'+homework_id
+      axios.delete(url)
+      .then(res => {
+        console.log('------deletehomework res-------')
+        console.log(res)
+        _this.$notify({
+          title: '提示',
+          message: '作业删除成功'
+        })
+        _this.updateCourseDetail()
       }).catch(error => {
         console.log(error)
       })
@@ -154,7 +178,23 @@ export default {
         console.log(res)
         _this.ratingList = res.data.data.rating_list
       })
-    }
+    },
+    rateHomework (row) {
+      let user_id = row.userid
+      // 跳转到批改页面
+    },
+    updateCourseDetail () {
+      let _this = this      
+      console.log('getCourseDetail start')
+      axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
+      .then(res=>{
+        _this.homeworkList=res.data.data.hw_list
+        _this.$notify({
+          title: '提示',
+          message: '作业更新'
+        })
+      })
+    },
   },
   components: {
     HomeworkDetail
@@ -182,11 +222,17 @@ export default {
     margin: 20px 40px;
     width: 80%;
   }
+  #homework-list {
+    width: 80%
+  }
   .el-button {
       float: right;
     }
   .el-collapse {
     margin: 20px 40px;
     width: 95%;
+  }
+  .el-button {
+    float: right;
   }
 </style>

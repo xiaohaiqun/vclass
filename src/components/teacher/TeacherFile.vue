@@ -1,6 +1,18 @@
 <template>
   <div id="teacher-file">
-    <upload></upload>
+    <div id="upload">
+    <el-upload
+      class="upload-demo"
+      drag
+      action=''
+      :http-request="uploadFile"
+      multiple
+      :file-list="uploadFileList">
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+      <div class="el-upload__tip" slot="tip">文件不超过50M</div>
+    </el-upload>
+  </div>
     <div id="file-list">
       <el-main>
         <el-table :data="fileList" height="500px" @row-click="file_download($event)">
@@ -20,7 +32,7 @@
               <el-button
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                @click="deleteFile(scope.$index, scope.row)">Delete</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -32,14 +44,17 @@
 <script>
 import Upload from './local/Upload.vue'
 import axios from 'axios'
+import store from '../../store/index'
 export default {
   name: 'TeacherFile',
   data () {
     return {
+      uploadFileList: []
     }
   },
   props: {
-    fileList: []
+    fileList: [],
+    courseId: ''
   },
   components: {
     Upload
@@ -63,6 +78,67 @@ export default {
         link.setAttribute('download', row.file_name)
         document.body.appendChild(link)
         link.click()
+      })
+    },
+    uploadFile (files) {
+        // 发起请求
+       let config = {
+        //添加请求头
+        headers: { "Content-Type": "multipart/form-data",
+                   "Accept":'application/json',
+                    "Authorization" : store.state.token 
+                    }
+       }
+       let _this = this
+       let url = 'http://vclass.finpluto.tech/courses/'+_this.courseId+'/sharedfiles'
+       console.log('-------------postUrl-----------')
+       console.log(url)
+       var readyData=_this.$qs.stringify({
+        display_path: 'test'
+      })
+       axios.post(url, config, {
+        transformRequest: [() => {
+          let formData = new FormData()
+          formData.append('file', files.file)
+          formData.append('display_path', readyData)
+          return formData
+        }]
+     }).then(res => {
+      console.log(res)
+      _this.$notify({
+          title: '提示',
+          message: '文件上传成功'
+        })
+      _this.updateCourseDetail()
+     })
+    },
+
+    deleteFile (index, row) {
+      let _this = this
+      let file_id = row.file_id
+      console.log('-----file_id-----')
+      console.log(file_id)
+      let url = 'http://vclass.finpluto.tech/courses/'+_this.courseId+'/sharedfiles/'+file_id
+      axios.delete(url)
+      .then(res => {
+        _this.$notify({
+          title: '提示',
+          message: '文件删除成功'
+        })
+        _this.updateCourseDetail()
+      })
+    },
+
+    updateCourseDetail () {
+      let _this = this      
+      console.log('getCourseDetail start')
+      axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
+      .then(res=>{
+        _this.fileList=res.data.data.file_list
+        _this.$notify({
+          title: '提示',
+          message: '文件更新'
+        })
       })
     }
   }
@@ -88,5 +164,9 @@ export default {
   }
   .el-table -webkit-scrollbar {
     display: none;
+  }
+  #upload {
+    margin: 20px 40px;
+    width: 80%;
   }
 </style>
