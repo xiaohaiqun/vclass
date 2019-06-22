@@ -25,7 +25,7 @@
     </div>
 
     <div id="homework-list">
-    <el-collapse v-for="(homework,index) in newHomeworkList" :key="homework.hw_id" v-model="activeName" accordion>
+    <el-collapse v-for="(homework,index) in homeworkList" :key="homework.hw_id" v-model="activeName" accordion>
       <el-collapse-item :title="homework.hw_title" >
         <div id="homework-detail">
           <el-button type="danger" size="mini" @click="deleteHomework(index)">删除</el-button>
@@ -200,7 +200,7 @@ export default {
       console.log('getCourseDetail start')
       axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
       .then(res=>{
-        _this.newHomeworkList=res.data.data.hw_list
+        _this.HomeworkList=res.data.data.hw_list
         _this.$notify({
           title: '提示',
           message: '作业更新'

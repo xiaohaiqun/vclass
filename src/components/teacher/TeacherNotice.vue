@@ -14,7 +14,7 @@
   </div>
     <div id="notice-list">
     <ul>
-      <li v-for="(notice,index) in newNoticeList" :key="notice.notice_id">
+      <li v-for="(notice,index) in noticeList" :key="notice.notice_id">
         <h3>{{notice.notice_title}}</h3>
         <el-button type="danger" size="mini" @click="deleteNotice(index)">删除</el-button>
         <p>{{notice.notice_content}}</p>
@@ -66,7 +66,7 @@ export default {
       console.log('getCourseDetail start')
       axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
       .then(res=>{
-        _this.newNoticeList=res.data.data.notice_list
+        _this.noticeList=res.data.data.notice_list
         _this.$notify({
           title: '提示',
           message: '通知更新'

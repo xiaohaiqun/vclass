@@ -15,7 +15,7 @@
   </div>
     <div id="file-list">
       <el-main>
-        <el-table :data="newFileList" height="500px" @row-click="file_download($event)">
+        <el-table :data="fileList" height="500px" @row-click="file_download($event)">
           <el-table-column prop="file_name" label="文件名称" width="140">
           </el-table-column>
           <el-table-column prop="display_path" label="文件位置" width="120">
@@ -139,7 +139,7 @@ export default {
       console.log('getCourseDetail start')
       axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
       .then(res=>{
-        _this.newFileList=res.data.data.file_list
+        _this.fileList=res.data.data.file_list
         _this.$notify({
           title: '提示',
           message: '文件更新'
