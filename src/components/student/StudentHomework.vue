@@ -96,6 +96,10 @@ export default {
       ]
      }).then(data => {
       console.log(data)
+      this.$notify({
+          title: '提示',
+          message: '作业上传成功'
+        })
      })
     }
 

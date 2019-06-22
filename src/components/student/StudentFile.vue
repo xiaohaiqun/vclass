@@ -66,7 +66,10 @@ export default {
         link.setAttribute('download', row.file_name)
         document.body.appendChild(link)
         link.click()
-      
+        this.$notify({
+          title: '提示',
+          message: '文件下载成功'
+        })
       })
     
     }  

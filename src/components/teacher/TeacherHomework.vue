@@ -11,7 +11,7 @@
         placeholder="请输入内容"
         v-model="content">
       </el-input>
-      <div class="block">
+      <div class="block" id="deadline">
         <span class="demonstration">截止日期</span>
         <el-date-picker
           v-model="deadline"
@@ -21,6 +21,7 @@
           value-format="yyyy-MM-dd"
           :picker-options="pickerOptions">
         </el-date-picker>
+        <el-button type="primary" plain @click="downloadCSV()">下载CSV</el-button>
       </div>
     </div>
 
@@ -37,11 +38,7 @@
             <el-table-column prop="username" label="姓名" @click="dialogTableVisible = true"></el-table-column>
             <el-table-column prop="grade" label="得分"></el-table-column>
             <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
-              <!-- <el-table :data="gridData">
-                <el-table-column property="date" label="日期" width="150"></el-table-column>
-                <el-table-column property="name" label="姓名" width="200"></el-table-column>
-                <el-table-column property="address" label="地址"></el-table-column>
-              </el-table> -->
+              
             </el-dialog>
           </el-table>
         </div>
@@ -55,7 +52,6 @@
 <script>
 import axios from 'axios'
 import store from '../../store/index'
-// import data from '../../static/data.json'
 export default {
   name: 'Homework',
   data () {
@@ -207,6 +203,29 @@ export default {
         })
       })
     },
+    downloadCSV () {
+      let url = 'http://vclass.finpluto.tech/courses/'+this.courseId+'/ratings'
+      axios({
+      method:'get',
+      url:url,
+      responseType:'blob',
+      })
+      .then((data) => {
+        if (!data) {
+            return
+        }
+        let url = URL.createObjectURL(data.data)
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        document.body.appendChild(link)
+        link.click()
+        this.$notify({
+          title: '提示',
+          message: '下载成功'
+        })
+      })
+    }
   },
   components: {
   }
@@ -235,6 +254,9 @@ export default {
   }
   #homework-list {
     width: 80%
+  }
+  #deadline {
+    margin:30px 0
   }
   .el-button {
       float: right;
