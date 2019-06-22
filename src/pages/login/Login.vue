@@ -21,7 +21,7 @@
       >
       <br>
       <!-- <input type="submit" value="sign in" @click="login"> -->
-      <button @click="login">登录</button>
+      <button @click.prevent="login">登录</button>
 
       <p>使用学/工号登录</p>
     </form>
