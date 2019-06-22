@@ -14,7 +14,7 @@
   </div>
     <div id="notice-list">
     <ul>
-      <li v-for="(notice,index) in noticeList" :key="notice.notice_id">
+      <li v-for="(notice,index) in newNoticeList" :key="notice.notice_id">
         <h3>{{notice.notice_title}}</h3>
         <el-button type="danger" size="mini" @click="deleteNotice(index)">删除</el-button>
         <p>{{notice.notice_content}}</p>
@@ -39,7 +39,8 @@ export default {
       newTitle: '',
       newContent: '',
       headline:'',
-      content:''
+      content:'',
+      newNoticeList: []
     }
   },
   props: {
@@ -56,19 +57,23 @@ export default {
     axios.defaults.headers.common['Authorization'] =store.state.token
     console.log(store.state.token)
   },
+  created () {
+    this.newNoticeList = this.noticeList
+  },
   methods: {
     updateCourseDetail () {
       let _this = this      
       console.log('getCourseDetail start')
       axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
       .then(res=>{
-        _this.noticeList=res.data.data.notice_list
+        _this.newNoticeList=res.data.data.notice_list
         _this.$notify({
           title: '提示',
           message: '通知更新'
         })
       })
     },
+
     addNotice () {
       let _this = this
       console.log('------courseId---------')
@@ -95,7 +100,7 @@ export default {
       }).catch(error => {
         console.log(error)
       })
-      updateCourseDetail()
+      _this.updateCourseDetail()
     },
 
     deleteNotice (index) {
@@ -113,7 +118,7 @@ export default {
           title: '提示',
           message: '通知删除成功'
         })
-        _this.updateCourseDetail()
+      _this.updateCourseDetail()
       }).catch(error => {
         console.log(error)
       })

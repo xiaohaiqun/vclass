@@ -25,16 +25,25 @@
     </div>
 
     <div id="homework-list">
-    <el-collapse v-for="(homework,index) in homeworkList" :key="homework.hw_id" v-model="activeName" accordion>
+    <el-collapse v-for="(homework,index) in newHomeworkList" :key="homework.hw_id" v-model="activeName" accordion>
       <el-collapse-item :title="homework.hw_title" >
         <div id="homework-detail">
           <el-button type="danger" size="mini" @click="deleteHomework(index)">删除</el-button>
           <h3>作业内容</h3>
           <p>{{homework.hw_content}}</p>
+          <label><b>截止日期：{{homework.deadline}}</b></label>
           <h3 @click="getRatings(homework.hw_id)">名单</h3>
-            <el-table :data="ratingList" @row-click="rateHomework($event)">
-              <el-table-column prop="username" label=""></el-table-column>
-            </el-table>
+          <el-table :data="ratingList">
+            <el-table-column prop="username" label="姓名" @click="dialogTableVisible = true"></el-table-column>
+            <el-table-column prop="grade" label="得分"></el-table-column>
+            <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
+              <!-- <el-table :data="gridData">
+                <el-table-column property="date" label="日期" width="150"></el-table-column>
+                <el-table-column property="name" label="姓名" width="200"></el-table-column>
+                <el-table-column property="address" label="地址"></el-table-column>
+              </el-table> -->
+            </el-dialog>
+          </el-table>
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -44,7 +53,6 @@
 </template>
 
 <script>
-import HomeworkDetail from './local/HomeworkDetail.vue'
 import axios from 'axios'
 import store from '../../store/index'
 // import data from '../../static/data.json'
@@ -91,20 +99,23 @@ export default {
       },
       hw_id: '',
       show: false,
-      ratingList: []
+      ratingList: [],
+      dialogTableVisible: false,
+      newHomeworkList: []
     }
   },
   props: {
     courseId: '',
     isDetail: false,
-    homeworkList: []
+    homeworkList: {}
   },
+
   beforeCreate () {
     axios.defaults.baseURL = 'http://vclass.finpluto.tech/'
     axios.defaults.headers.common['Authorization'] =store.state.token
   },
-  created: {
-
+  created () {
+    this.newHomeworkList = this.homeworkList
   },
   methods: {
     childByValue: function (isDetail) {
@@ -181,6 +192,7 @@ export default {
     },
     rateHomework (row) {
       let user_id = row.userid
+      let _this = this
       // 跳转到批改页面
     },
     updateCourseDetail () {
@@ -188,7 +200,7 @@ export default {
       console.log('getCourseDetail start')
       axios.get('http://vclass.finpluto.tech/courses/'+_this.courseId)
       .then(res=>{
-        _this.homeworkList=res.data.data.hw_list
+        _this.newHomeworkList=res.data.data.hw_list
         _this.$notify({
           title: '提示',
           message: '作业更新'
@@ -197,7 +209,6 @@ export default {
     },
   },
   components: {
-    HomeworkDetail
   }
 }
 </script>
@@ -234,5 +245,8 @@ export default {
   }
   .el-button {
     float: right;
+  }
+  .el-table {
+    font-weight:300
   }
 </style>
